@@ -42,6 +42,7 @@ and/or are not already interested in the topic, then it's probably better
 to take a different class.
 
 Before class:
+
    0. Clone this repo: `git clone git@github.com:dddrrreee/cs49n-19spr.git`.
    You may need to install `git` on your laptop.
 
