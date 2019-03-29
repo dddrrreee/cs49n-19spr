@@ -46,12 +46,14 @@ Before class:
    0. Clone this repo: `git clone git@github.com:dddrrreee/cs49n-19spr.git`.
    You may need to install `git` on your laptop.
 
-   1. Some way to write a micro-SD card.  Note that newer Macs do not
-   have SD card slots so you will need an adaptor.  Make sure when you
-   plug in an SD card you know how to find where it is mounted.
+   1. Make sure you have some way to write a micro-SD card and understand
+   how to do so.  Note that newer Macs do not have SD card slots so you
+   will need an adaptor.  Make sure when you plug in an SD card you know
+   how to find where it is mounted. 
 
-   2. Some way to plug in a USB adaptor.   Note, as above, newer Macs
-   do not have USB ports so you may need a USB-C to USB adaptor.
+   2. Make sure you have some way to plug in a USB adaptor.   Note,
+   as above, newer Macs do not have USB ports so you may need a USB-C
+   to USB adaptor.
 
    3. Figure out how to add a directory to your `PATH`.  This will
    be valuable all quarter. The exact mechanics are shell-dependent.
