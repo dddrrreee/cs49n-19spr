@@ -42,16 +42,19 @@ and/or are not already interested in the topic, then it's probably better
 to take a different class.
 
 Before class:
-   1. Figure out how to add a directory to your `PATH`.  This will
-   be valuable all quarter. The exact mechanics are shell-dependent.
-   For `bash` look in `.bashrc`, for `tcsh` look in `.tcshrc` etc.
+   0. Clone this repo: `git clone git@github.com:dddrrreee/cs49n-19spr.git`.
+   You may need to install `git` on your laptop.
 
-   2. Some way to write a micro-SD card.  Note that newer Macs do not
+   1. Some way to write a micro-SD card.  Note that newer Macs do not
    have SD card slots so you will need an adaptor.  Make sure when you
    plug in an SD card you know how to find where it is mounted.
 
-   3. Some way to plug in a USB adaptor.   Note, as above, newer Macs
+   2. Some way to plug in a USB adaptor.   Note, as above, newer Macs
    do not have USB ports so you may need a USB-C to USB adaptor.
+
+   3. Figure out how to add a directory to your `PATH`.  This will
+   be valuable all quarter. The exact mechanics are shell-dependent.
+   For `bash` look in `.bashrc`, for `tcsh` look in `.tcshrc` etc.
 
 Grading:
 
@@ -59,15 +62,15 @@ Grading:
    in the lab itself, within 7 days.
 
    2. There is a final project.  You will have an expense account at
-   `sparkfun.com` and `adafruit.com` to buy whatever devices you like and
-   build something interesting.
+   `sparkfun.com` and `adafruit.com` to buy whatever devices you like
+   and build something interesting.
 
    3. Participation: if you have something to say, can help people out,
    figure out interesting things, etc you'll do fine.
 
-   4. Class is not optional: from past experience, if someone falls behind, it's
-   very hard to catch up.  So other than a few pre-excused absences,
-   you must be at each lab.
+   4. Class is not optional: from past experience, if someone falls
+   behind, it's very hard to catch up.  So other than a few pre-excused
+   absences, you must be at each lab.
 
 ### Overview
 
