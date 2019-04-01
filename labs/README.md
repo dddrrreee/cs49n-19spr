@@ -88,7 +88,7 @@ Now that you have clean, solid code, we use tricks so that it can do new things.
     code better.
 
 --------------------------------------------------------------------
-###All code is yours (4 labs)
+### All code is yours (4 labs)
 
 This chunk of the class will have your write all the code that has been
 a black box so far: the software UART and both the pi and Unix side of
