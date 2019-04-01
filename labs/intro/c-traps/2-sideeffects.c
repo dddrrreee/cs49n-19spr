@@ -5,11 +5,14 @@
 int main() { 
 	int i;
 
+#if 0
 	for(i=0; i < 10; i) 
 		printf("i=%d\n", i);
 
-#if 0
+#endif
 
+
+#if 0
 	i = 0;
 	i = !!!(i==4);
 
