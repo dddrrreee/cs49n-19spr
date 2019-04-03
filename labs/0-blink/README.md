@@ -38,7 +38,7 @@ Pick up:
   6. printout of the pi's pins.
 
 <table><tr><td>
-  <img src="images/manifest.jpg" style="transform:rotate(90deg);"/>
+  <img src="images/manifest.jpg" style="transform:rotate(180);"/>
 </td></tr></table>
 
 
@@ -118,7 +118,7 @@ your computer, copy it into pi memory, and then jump to it.  We currently
 give you a pre-compiled version (`firmware/bootloader.bin`).
 
 <table><tr><td>
-  <img src="images/assembled.jpg"/>
+  <img src="images/assembled.jpg" style="transform:rotate(180);"/>
 </td></tr></table>
 
 
