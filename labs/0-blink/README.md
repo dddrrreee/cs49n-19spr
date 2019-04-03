@@ -136,6 +136,7 @@ Linux:
   on the distribution.
 
 Mechanically:
+
   0. Unplug your pi, don't modify the wiring for the tty or the LED.
   1. Copy `firmware/bootloader.bin` on your SD card as `kernel.img` (see a 
 	pattern?).
