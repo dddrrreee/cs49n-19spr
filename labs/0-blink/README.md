@@ -1,9 +1,3 @@
----
-layout: page
-title: Quick overview.
-show_on_index: true
----
-
 ### Lab: make sure R/pi hardware and its toolchain works.
 
 There's a lot of fiddly little details in getting a pi working, and this
