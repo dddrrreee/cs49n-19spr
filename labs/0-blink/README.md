@@ -121,6 +121,15 @@ give you a pre-compiled version (`firmware/bootloader.bin`).
   <img src="images/assembled.jpg"/>
 </td></tr></table>
 
+Mac:
+  - Download and install the drivers for a
+   CP210x USB-to-UART driver as described in the cs107e docs:
+	(http://cs107e.github.io/guides/mac_toolchain/).
+   - Make sure you reboot after doing so.
+
+Linux:
+  - you may need to add yourself to the `dialout` group (or `serial`) depending
+  on the distribution.
 
 Mechanically:
   0. Unplug your pi, don't modify the wiring for the tty or the LED.
@@ -129,12 +138,8 @@ Mechanically:
   2. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
      switch them?  (Hint: Think about the semantics of TX (transmit)
      and RX (receive).)
-  3. If you have a mac, first download and install the drivers for a
-   CP210x USB-to-UART driver as described in the cs107e docs:
-	(http://cs107e.github.io/guides/mac_toolchain/).
-	(It's a mac, so make sure you reboot after doing so.)
-  3. Either copy `bin/pi-install.linux` or `/bin/pi-install.macos` to your
-     local `bin/` as `pi-install`.  Make sure when you type 'pi-intall'
+  3. Copy `bin/pi-install.linux` or `/bin/pi-install.macos` to your
+     local `bin/pi-install`.  Make sure when you type 'pi-install'
      something happens!  If not, make sure your local `bin/` directory
      is in your path, and that you have sourced your shell startup file.
   4. Run `pi-install part1/blink-pin20.bin`
@@ -149,7 +154,8 @@ need to set up the tools needed to ``cross-compile'' r/pi programs on
 your computer and to r/pi binaries.
 
 Install the toolchain:
-   -  For a mac: (http://cs107e.github.io/guides/mac_toolchain/)
+   -  For a mac use the [cs107e install notes] (http://cs107e.github.io/guides/mac_toolchain/).    Note: do not install the python stuff.
+
    -  For ubuntu/linux (from: 
    (https://github.com/eistec/mulle/wiki/Installing-toolchain-%28GCC%29)):
 
@@ -159,9 +165,9 @@ Install the toolchain:
        
       You may also have to add yourself to the `dialout` group.
 
-Compile `part2/blink-pin20.s`
+Compile `part2/blink-pin20.s` using the shell script.
 
-   1. `cd part2`.   Run `make.sh`.
+   1. `cd part2`.   Run `sh make.sh`.
    2. reset your pi: unplug the TTY-USB then plug it back in to your laptop.
    3.  `pi-instally part2/blink-pin20.bin`.   Should blink.  If
 	not isolate the problem by trying the blink-pin20.bin in `part1/`,
