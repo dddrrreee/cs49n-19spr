@@ -1,7 +1,0 @@
-Pat's lab1 blink code from 107e.
-
-Blink an LED connected to GPIO 20.
-
-
-Run: `sh make.sh` and then `pi-install blink
-

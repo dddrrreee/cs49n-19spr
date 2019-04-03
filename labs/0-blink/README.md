@@ -43,39 +43,57 @@ Pick up:
   5. some female-female jumpers;
   6. printout of the pi's pins.
 
-#### 1. Make sure hardware is working:
-  Use the USB-TTY to power the pi, and use the pi's power to directly
-  turn on an LED.  This tests some basic hardware and that you know how to
-  wire.
+<table><tr><td>
+  <img src="images/manifest.jpg"/>
+</td></tr></table>
 
-  Mechanically:
+
+#### 1. Make sure hardware is working:
+
+Before we mess with software, we first make sure the hardware works.  When doing
+something for the first time, you always want to isolate into small pieces.
+
+Use the USB-TTY to power the pi, and use the pi's power to directly
+turn on an LED.  This tests some basic hardware and that you know how to
+wire.
+
+Picture.
+
+Mechanically:
   1. Connect the USB-to-TTL Serial cable's power (red) and ground  (black)
      wires to the 5v and ground pins on the pi that are next to each other
 	(see your printout; upper right corner).
   2. Plug the USB-TTY into your USB port.
-  3. Connect  your LED up to another ground pin and a power pin (there are
+  3. Connect  your LED up to another ground pin and the 3v power pin (there are
      several) to make sure the hardware components work, and you know how
      get them to.  If the LED doesn't go on, reverse its connections.
      If still doesn't go on, plug someone else's working version into
      your computer.  If that doesn't work, ask.
 
-  (EE folks: We don't use a breadboard b/c it's bulky; we don't use
-  resistors for the same reason + the LED is big enough we generally
-  don't fry it.)
+(EE folks: We don't use a breadboard b/c it's bulky; we don't use
+resistors for the same reason + the LED is big enough we generally don't
+fry it.)
+
+
+What can go wrong:
+  1. If your USB-to-TTL starts heating up, disconnnect!   It appears that 1 in 8
+  is defective.   
+  2. If your pi starts heating up, now or ever, disconnect!   If you have a short,
+  where a pin with power feeds right into ground, you'll fry it.
 
 #### 2.  Make sure you're able to install firmware, etc:
 
-  Copy the precompiled program `part1/blink-pin20.bin` to the SD card as
-  `kernel.img`, put the card in the pi, hook up the LED to pin 20, connect
-  the TTY-USB.  After it boots, the pi will jump to whatever code is 
-  in `kernel.img` --- in our case, code to turn pin 20 on and off.
+Copy the precompiled program `part1/blink-pin20.bin` to the SD card as
+`kernel.img`, put the card in the pi, hook up the LED to pin 20, connect
+the TTY-USB.  After it boots, the pi will jump to whatever code is in
+`kernel.img` --- in our case, code to turn pin 20 on and off.
 
-  Note: in the next assignment  when you develop your own remote
-  bootloader (see next step), if your code is broken you'll need to use
-  this SD card method to load a new version, so pay attention to how you do it
-  on your computer.
+Note: in the next assignment  when you develop your own remote bootloader
+(see next step), if your code is broken you'll need to use this SD
+card method to load a new version, so pay attention to how you do it on
+your computer.
 
-  Mechanically:
+Mechanically:
   1. Unplug the USB-TTY.
   2. Plug SD card into your computer and figure out where it's mounted.
   3. Copy all the files from the `firmware/` directory onto the SD card.
@@ -86,10 +104,11 @@ Pick up:
   7. Plug the SD card into your pi
   8. plug in the USB-TTY to your USB to power the pi.
 
-It should be blinking.  If you get this working, please help anyone else that
-is stuck so we all kind of stay about the same speed.  
+The LED should be blinking.  If you get this working, please help anyone
+else that is stuck so we all kind of stay about the same speed.
 
 Troubleshooting:
+   0. First try to trouble shooting from part 1.
    1. If it's not blinking, swap in someone else's card that is working.
    2. If that works, compare their SD card to yours.
    3. If that doesn't work, try your card in their rpi.  
@@ -97,19 +116,22 @@ Troubleshooting:
 
 #### 3.  Send a new pi program from your computer rather than SD card.
 
-  As you've noticed, running new programs on the pi using the SD card
-  method is tedious.  This step shows makes it so you can send programs
-  directly from your computer to a plugged-in pi.
+As you've noticed, running new programs on the pi using the SD card
+method is tedious.  This step shows makes it so you can send programs
+directly from your computer to a plugged-in pi.
 
-  Method: install a program (which we somewhat inaccurately call a
-  "bootloader").   This program will wait on the pi for
-  a program sent by your computer, copy it into pi memory, and then
-  jump to it.  We currently give you a pre-compiled version (
-	`firmware/bootloader.bin`). 
-	Our first homework next week will be to write your own.
+Method: install a program (which we somewhat inaccurately call a
+"bootloader").   This program will wait on the pi for a program sent by
+your computer, copy it into pi memory, and then jump to it.  We currently
+give you a pre-compiled version (`firmware/bootloader.bin`).
 
-  Mechanically:
-  0. Unplug your pi, don't modify the wiring the wiring for the LED.
+<table><tr><td>
+  <img src="images/assembled.jpg"/>
+</td></tr></table>
+
+
+Mechanically:
+  0. Unplug your pi, don't modify the wiring for the tty or the LED.
   1. Copy `firmware/bootloader.bin` on your SD card as `kernel.img` (see a 
 	pattern?).
   2. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
@@ -119,11 +141,11 @@ Troubleshooting:
    CP210x USB-to-UART driver as described in the cs107e docs:
 	(http://cs107e.github.io/guides/mac_toolchain/).
 	(It's a mac, so make sure you reboot after doing so.)
-  3. Either copy `bin/pi-install.linux` or /bin/pi-install.macos` to your local `bin/` 
-     as `pi-install`.  Make sure when you type 'pi-intall' something happens!
-     If not, make sure your local `bin/` directory is in your path, and that you
-     have sourced your shell startup file.
-  4. Run `rpi-install.py part1/blink-pin20.bin`
+  3. Either copy `bin/pi-install.linux` or `/bin/pi-install.macos` to your
+     local `bin/` as `pi-install`.  Make sure when you type 'pi-intall'
+     something happens!  If not, make sure your local `bin/` directory
+     is in your path, and that you have sourced your shell startup file.
+  4. Run `pi-install part1/blink-pin20.bin`
 
 Your LED should be blinking.
 
@@ -149,13 +171,14 @@ Compile `part2/blink-pin20.s`
 
    1. `cd part2`.   Run `make.sh`.
    2. reset your pi: unplug the TTY-USB then plug it back in to your laptop.
-   3.  `rpi-install.py blink-pin20.bin` (in `part2/`).  Should blink.  If 
-	not isolate the problem by trying the blink-pin20.bin in `part1/`, your lab partner's, etc.
+   3.  `pi-instally part2/blink-pin20.bin`.   Should blink.  If
+	not isolate the problem by trying the blink-pin20.bin in `part1/`,
+	your lab partner's, etc.
 
 #### 5. write your own blink!
 
-Congratulations!  You now have a working system, and have avoided a bunch of very
-annoying problems.
+Congratulations!  You now have a working system, and have solved or
+avoided a bunch of very annoying problems.
 
 Now we get to the fun part.  You'll read the Broadcom document to see how to 
 turn the GPIO pins on yourself and then filling in the code in `part3/blink.c`.
@@ -168,7 +191,7 @@ Change the code to first work with GPIO20.
    2. Adapt the code in `part3/blink.c` to (1) set GPIO pin 20 to output,
    and then in a loop repeatedly set it on and off ("clear").  
    3. After each change, power-cycle the pi, and use the bootloader to
-   load the code. `rpi-install.py kernel.img`
+   load the code. `pi-install kernel.img`
 
 Generalize your code to work with any pin from 0 to 30 (note, not all of these
 are defined, but ignore that):  
@@ -235,9 +258,9 @@ wrong and to make it somewhat better:
 
 More links:
 
-  1. useful baremetal information: (http://www.raspberrypi.org/forums/viewtopic.php?t=16851)
+  1. Useful baremetal information: (http://www.raspberrypi.org/forums/viewtopic.php?t=16851)
 
-  2. more baremetalpi: (https://github.com/brianwiddas/pi-baremetal)
+  2. More baremetalpi: (https://github.com/brianwiddas/pi-baremetal)
 
   3. And even more bare metal pi: (http://www.valvers.com/embedded-linux/raspberry-pi/step01-bare-metal-programming-in-cpt1)
 
