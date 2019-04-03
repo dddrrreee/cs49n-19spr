@@ -37,3 +37,19 @@ void write_mailbox_x(mailbox_t *mbox, unsigned channel) {
     cp.pointer = 0;
     mbox->write = ((unsigned)(&cp) | channel | 0x40000000);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
