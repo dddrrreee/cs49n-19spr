@@ -131,8 +131,8 @@ give you a pre-compiled version (`firmware/bootloader.bin`).
 
 Mac:
   - Download and install the drivers for a
-   CP210x USB-to-UART driver as described in the cs107e docs:
-	(http://cs107e.github.io/guides/mac_toolchain/).
+   CP210x USB-to-UART driver as described in the 
+   [cs107e docs](http://cs107e.github.io/guides/mac_toolchain/).
    - Make sure you reboot after doing so.
 
 Linux:
@@ -164,7 +164,7 @@ need to set up the tools needed to ``cross-compile'' r/pi programs on
 your computer and to r/pi binaries.
 
 Install the toolchain:
-   -  For a mac use the [cs107e install notes] (http://cs107e.github.io/guides/mac_toolchain/).    Note: do not install the python stuff.
+   -  For a mac use the [cs107e install notes](http://cs107e.github.io/guides/mac_toolchain/).    Note: do not install the python stuff.
 
    -  For ubuntu/linux (from: 
    (https://github.com/eistec/mulle/wiki/Installing-toolchain-%28GCC%29)):
