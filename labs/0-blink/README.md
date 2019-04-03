@@ -1,13 +1,15 @@
 ### Lab: make sure R/pi hardware and its toolchain works.
 
-There's a lot of fiddly little details in getting a pi working, and this
-is many people's first time working with this kind of hardware, so we
-break this down into many (perhaps too-many) small steps.  Please help
-make this document better!
+There's a lot of fiddly little details in getting a pi working, and
+this lab is many people's first time working with hardware, so we break
+the lab down into many (perhaps too-many) small steps.   Our theorem:
+the smaller the step, the more obvious what the actual (distal) error is
+and the less time you have to spend debugging.
 
-We'll use different variations of a blinky light using GPIO pin 20:
+We'll use different variations of a blinky light using GPIO pin 20 
+(second from bottom on the right):
 
-  1. you'll make the LED turn on manually;
+  1. you'll turn on an LED manually;
   2. then use a pre-compiled program (why not skip 1?);
   3. then use a bootloader (why not skip 2?);
   4. then install the r/pi tool chain, compile a given assembly
@@ -24,12 +26,8 @@ The final sign off for the lab, show the TA/me your code and run four
   if 20 is on, 21 should be off).  (This will point out a subtle mistake
   people make reading the docs).
 
-Also, with your partner: write out any problems you hit, how you diagnosed
-them, what the solution was, and post to the newsgroup.  This will be
-useful later.
-
 --------------------------------------------------------------------------
-### Life or death rules for pi hardware.
+### Life and death rules for pi hardware.
 
 Always:
 
@@ -39,13 +37,16 @@ Always:
      pulling the SD card out while under power appears to sometimes
      cause corruption.
 
-  2. If the pi is not responding, unplug it (removes power) and reconnect.
+  2. While you've maybe never worked with a pi, it's just like anything
+     else in the sense: if it's not responding, unplug it (remove power)
+     and reconnect.
 
   3. If anything ever gets hot --- the serial device, the pi ---
-     ***disconnect***.  Sometimes devices have physical errors (welcome to
-     hardware), sometimes you've made a mistake.  Any of these can lead
-     to frying the device or, in the worst case, your laptop.  So don't
-     assume you have a safety net: its up to you to avert disaster.
+     ***disconnect***.  Sometimes devices have manufacturing errors
+     (welcome to hardware), sometimes you've made a mistake.  Any of
+     these can lead to frying the device or, in the worst case, your
+     laptop.  So don't assume you have a safety net: its up to you to
+     avert disaster.
 
 --------------------------------------------------------------------------
 #### 0. Make sure you have everything.
