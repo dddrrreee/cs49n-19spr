@@ -29,6 +29,25 @@ them, what the solution was, and post to the newsgroup.  This will be
 useful later.
 
 --------------------------------------------------------------------------
+### Life or death rules for pi hardware.
+
+Always:
+
+  1. Whenever you make a hardware change --- messing with wires,
+     pulling the SD card in/out --- ***make sure pi is disconnected***.
+     It's too easy to short something and fry your hardware.  Also,
+     pulling the SD card out while under power appears to sometimes
+     cause corruption.
+
+  2. If the pi is not responding, unplug it (removes power) and reconnect.
+
+  3. If anything ever gets hot --- the serial device, the pi ---
+     ***disconnect***.  Sometimes devices have physical errors (welcome to
+     hardware), sometimes you've made a mistake.  Any of these can lead
+     to frying the device or, in the worst case, your laptop.  So don't
+     assume you have a safety net: its up to you to avert disaster.
+
+--------------------------------------------------------------------------
 #### 0. Make sure you have everything.
 
 Pick up:
