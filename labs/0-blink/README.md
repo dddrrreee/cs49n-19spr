@@ -53,6 +53,11 @@ Use the USB-TTY to power the pi, and use the pi's power to directly
 turn on an LED.  This tests some basic hardware and that you know how to
 wire.
 
+
+<table><tr><td>
+  <img src="images/../../docs/gpio.png"/>
+</td></tr></table>
+
 Mechanically:
   1. Connect the USB-to-TTL Serial cable's power (red) and ground  (black)
      wires to the 5v and ground pins on the pi that are next to each other
@@ -143,7 +148,7 @@ Mechanically:
   2. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
      switch them?  (Hint: Think about the semantics of TX (transmit)
      and RX (receive).)
-  3. Copy `bin/pi-install.linux` or `/bin/pi-install.macos` to your
+  3. Copy `bin/pi-install.linux` or `bin/pi-install.macos` to your
      local `bin/pi-install`.  Make sure when you type 'pi-install'
      something happens!  If not, make sure your local `bin/` directory
      is in your path, and that you have sourced your shell startup file.
