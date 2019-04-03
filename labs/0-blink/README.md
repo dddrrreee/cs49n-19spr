@@ -54,7 +54,7 @@ turn on an LED.  This tests some basic hardware and that you know how to
 wire.
 
 <table><tr><td>
-  <img src="../../docs/gpio.png"/>
+  <img src="images/gpio.png"/>
 </td></tr></table>
 
 Mechanically:
