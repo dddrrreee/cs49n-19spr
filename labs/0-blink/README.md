@@ -38,7 +38,7 @@ Pick up:
   6. printout of the pi's pins.
 
 <table><tr><td>
-  <img src="images/manifest.jpg"/>
+  <img src="images/manifest.jpg" style="transform:rotate(90deg);"/>
 </td></tr></table>
 
 
