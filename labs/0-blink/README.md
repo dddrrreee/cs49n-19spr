@@ -166,8 +166,7 @@ your computer and to r/pi binaries.
 Install the toolchain:
    -  For a mac use the [cs107e install notes](http://cs107e.github.io/guides/mac_toolchain/).    Note: do not install the python stuff.
 
-   -  For ubuntu/linux (from: 
-   (https://github.com/eistec/mulle/wiki/Installing-toolchain-%28GCC%29)):
+   -  For [ubuntu/linux](https://github.com/eistec/mulle/wiki/Installing-toolchain-%28GCC%29):
 
            sudo add-apt-repository ppa:team-gcc-arm-embedded/ppa
            sudo apt-get update
