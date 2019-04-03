@@ -10,7 +10,7 @@ int main() {
 		printf("i=%d\n", i);
 
 #endif
-
+    printf("main=%p\n", main);
 
 #if 0
 	i = 0;
@@ -26,9 +26,10 @@ int main() {
 	(void)0;
 
 #endif
+#if 0
+
 	if(setuid != 0)
 		printf("you are root!\n");
-#if 0
 #endif
 
 	return 0;

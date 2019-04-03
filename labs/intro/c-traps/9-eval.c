@@ -17,5 +17,7 @@ int main( void ) {
 	int d = sizeof bar(); 
 
   	printf( "a=%d, b=%d c=%d, d=%d\n", a , b, c, d);
+#if 0
+#endif
   	return 0;
 }

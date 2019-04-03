@@ -3,7 +3,7 @@
 int main() { 
 	unsigned a = 8;
 
-	if(a & 8 != 0)
+	if((a & 8) != 0)
 		printf("overlaps with 8! a=%d\n", a);
 
 #if 0
