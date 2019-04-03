@@ -57,8 +57,6 @@ Use the USB-TTY to power the pi, and use the pi's power to directly
 turn on an LED.  This tests some basic hardware and that you know how to
 wire.
 
-Picture.
-
 Mechanically:
   1. Connect the USB-to-TTL Serial cable's power (red) and ground  (black)
      wires to the 5v and ground pins on the pi that are next to each other
