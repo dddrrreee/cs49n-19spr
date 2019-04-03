@@ -20,8 +20,9 @@ The final sign off for the lab, show the TA/me your code and run four
   1. one that blinks pin 20; 
   2. pin 16 (right above 20);
   3. pin 5;
-  4. Finally, blink 20 and 21 (right below 20) simultaneously.
-  (This will point out a subtle mistake people make reading the docs).
+  4. Finally, blink 20 and 21 (right below 20) in opposite orders (i.e.,
+  if 20 is on, 21 should be off).  (This will point out a subtle mistake
+  people make reading the docs).
 
 Also, with your partner: write out any problems you hit, how you diagnosed
 them, what the solution was, and post to the newsgroup.  This will be
