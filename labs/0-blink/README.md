@@ -27,6 +27,7 @@ Also, with your partner: write out any problems you hit, how you diagnosed
 them, what the solution was, and post to the newsgroup.  This will be
 useful later.
 
+--------------------------------------------------------------------------
 #### 0. Make sure you have everything.
 
 Pick up:
@@ -42,6 +43,7 @@ Pick up:
 </td></tr></table>
 
 
+--------------------------------------------------------------------------
 #### 1. Make sure hardware is working:
 
 Before we mess with software, we first make sure the hardware works.  When doing
@@ -73,6 +75,7 @@ What can go wrong:
   2. If your pi starts heating up, now or ever, disconnect!   If you have a short,
   where a pin with power feeds right into ground, you'll fry it.
 
+--------------------------------------------------------------------------
 #### 2.  Make sure you're able to install firmware, etc:
 
 Copy the precompiled program `part1/blink-pin20.bin` to the SD card as
@@ -106,6 +109,7 @@ Troubleshooting:
    3. If that doesn't work, try your card in their rpi.  
 
 
+--------------------------------------------------------------------------
 #### 3.  Send a new pi program from your computer rather than SD card.
 
 As you've noticed, running new programs on the pi using the SD card
@@ -146,6 +150,7 @@ Mechanically:
 
 Your LED should be blinking.
 
+--------------------------------------------------------------------------
 #### 4.  Make sure your r/pi toolchain is working.
 
 For this class you need to compile bare-metal r/pi programs on your
@@ -173,6 +178,7 @@ Compile `part2/blink-pin20.s` using the shell script.
 	not isolate the problem by trying the blink-pin20.bin in `part1/`,
 	your lab partner's, etc.
 
+--------------------------------------------------------------------------
 #### 5. write your own blink!
 
 Congratulations!  You now have a working system, and have solved or
@@ -222,6 +228,7 @@ Hint:
   registers on page 95.  We write to `GPSET0` to set a pin (turn it on)
   and write to `GPCLR0` to clear a pin (turn it off).
 
+--------------------------------------------------------------------------
 #### 6. Extra: Break and tweak stuff.
 
 You're going to break and change your code to see effects of things going 
@@ -252,6 +259,7 @@ wrong and to make it somewhat better:
    you notice any difference in timing?  (You may have to make your 
    delay longer.)  What is going on?  
 
+--------------------------------------------------------------------------
 #### Additional information
 
 More links:
