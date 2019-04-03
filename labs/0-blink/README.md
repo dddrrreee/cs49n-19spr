@@ -103,10 +103,9 @@ What can go wrong:
 --------------------------------------------------------------------------
 #### 2.  Make sure you're able to install firmware, etc:
 
-Copy the precompiled program `part1/blink-pin20.bin` to the SD card as
-`kernel.img`, put the card in the pi, hook up the LED to pin 20, connect
-the TTY-USB.  After it boots, the pi will jump to whatever code is in
-`kernel.img` --- in our case, code to turn pin 20 on and off.
+You'll run a precompiled program (`part1/blink-pin20.bin`) on the pi and make
+sure it can blink pin 20.
+
 
 Note: in the next assignment  when you develop your own remote bootloader
 (see next step), if your code is broken you'll need to use this SD
@@ -116,13 +115,14 @@ your computer.
 Mechanically:
   1. Unplug the USB-TTY.
   2. Plug SD card into your computer and figure out where it's mounted.
-  3. Copy all the files from the `firmware/` directory onto the SD card.
+  3. Copy all the files from class `firmware` directory onto the SD card (`cp firmware/* /<sdcard path>/`)
   4. copy `part1/blink-pin20.bin` to the SD card as `kernel.img`.
-  5. unmount the SD card (don't just pull it out!  data may not be written out.)
+  5. unmount/eject the SD card (don't just pull it out!  data may not be written out.)
   6. connect the LED to GPIO20 and ground. 
      Use `docs/gpio.png` to figure out which this is.
   7. Plug the SD card into your pi
-  8. plug in the USB-TTY to your USB to power the pi.
+  8. Plug in the USB-TTY to your USB to power the pi.  The pi will jump
+  to whatever code is in `kernel.img`.
 
 The LED should be blinking.  If you get this working, please help anyone
 else that is stuck so we all kind of stay about the same speed.
@@ -157,14 +157,14 @@ Mac:
    - Make sure you reboot after doing so.
 
 Linux:
-  - you may need to add yourself to the `dialout` group (or `serial`) depending
-  on the distribution.
+  - You shouldn't need drivers, however you may need to add yourself to
+  the `dialout` group (or `serial`) depending on the distribution.
 
 Mechanically:
 
-  0. Unplug your pi, don't modify the wiring for the tty or the LED.
+  0. Unplug your pi. Don't modify your current wiring.
   1. Copy `firmware/bootloader.bin` on your SD card as `kernel.img` (see a 
-	pattern?).
+ 	pattern?).
   2. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
      switch them?  (Hint: Think about the semantics of TX (transmit)
      and RX (receive).)
@@ -199,7 +199,7 @@ Compile `part2/blink-pin20.s` using the shell script.
 
    1. `cd part2`.   Run `sh make.sh`.
    2. reset your pi: unplug the TTY-USB then plug it back in to your laptop.
-   3.  `pi-instally part2/blink-pin20.bin`.   Should blink.  If
+   3.  `pi-install part2/blink-pin20.bin`.   Should blink.  If
 	not isolate the problem by trying the blink-pin20.bin in `part1/`,
 	your lab partner's, etc.
 
