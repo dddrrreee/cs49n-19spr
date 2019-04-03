@@ -55,7 +55,7 @@ wire.
 
 
 <table><tr><td>
-  <img src="../../docs/gpio.png"/>
+  <img src="images/gpio.png"/>
 </td></tr></table>
 
 Mechanically:
