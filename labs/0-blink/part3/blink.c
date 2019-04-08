@@ -21,28 +21,41 @@
  *     carefully at the wording for GPIO set.
  */
 
+// these are in start.s
 void put32(volatile void *addr, unsigned v);
 unsigned get32(const volatile void *addr);
 
-
 // see broadcomm documents for magic addresses.
 #define GPIO_BASE 0x20200000
-volatile unsigned *gpio_fsel1 = (volatile unsigned *)(GPIO_BASE + 0x04);
+volatile unsigned *gpio_fsel0 = (volatile unsigned *)(GPIO_BASE + 0x00);
 volatile unsigned *gpio_set0  = (volatile unsigned *)(GPIO_BASE + 0x1C);
 volatile unsigned *gpio_clr0  = (volatile unsigned *)(GPIO_BASE + 0x28);
 
-
-
-// XXX might need memory barriers.
+// set <pin> to output.
 void gpio_set_output(unsigned pin) {
-    // gpio_fsel1  --- set 'pin' to output.
+    // use gpio_fsel0
 }
 
+
+// set <pin> on.
 void gpio_set_on(unsigned pin) {
     // use gpio_set0
 }
+
+// set <pin> off
 void gpio_set_off(unsigned pin) {
     // use gpio_clr0
+}
+
+// For later labs, write these routines as well.
+
+// set <pin> to input.
+void gpio_set_input(unsigned pin) {
+    // use gpio_fsel0  
+}
+// set <pin> to <v> (v \in {0,1})
+void gpio_write(unsigned pin, unsigned v) {
+    // 
 }
 
 // countdown 'ticks' cycles; the asm probably isn't necessary.
@@ -51,13 +64,16 @@ void delay(unsigned ticks) {
         asm("add r1, r1, #0");
 }
 
-int notmain ( void ) {
+
+// when you run should blink 10 times. will have to restart the pi by pulling the
+// usb connection out.
+void notmain(void) {
     int led = 20;
+    gpio_set_output(led);
     for(int i = 0; i < 10; i++) {
         gpio_set_on(led);
         delay(1000000);
         gpio_set_off(led);
         delay(1000000);
     }
-    return 0;
 }
