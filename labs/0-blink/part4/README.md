@@ -55,6 +55,12 @@ Write the code:
   - Write a loop to read the input pin and set the output pin to its value.
   - With your original wiring, pushing the button should make the input go high.
 
+
+Apologies for the wiring --- forgot to bring a wire-cutter:
+<table><tr><td>
+  <img src="../images/button.jpg"/>
+</td></tr></table>
+
 #### Part 3: get fancy.
 
 Hook up multiple buttons and use them to control multiple LEDs, you can also
