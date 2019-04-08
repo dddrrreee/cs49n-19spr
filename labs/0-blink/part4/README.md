@@ -4,8 +4,12 @@ Blinking the LED showed how to do output, we now use a push-button switch
 to show how to setup your pi for input.
 
 ***CRUCIAL:***
-  - ***If you haven't seen a breadboard before, make sure you read how it works***
   - ***Make sure you only connect to the 3v pin on the pi***
+  - ***If you haven't seen a breadboard before, make sure you read how it works***
+    If this is the first time you've used one in your life, the [sparkfun
+    tutorial](https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard)
+    is a good, quick place to look.  Don't fry your pi.  If anything
+    gets hot, pull it out.
 
 #### Part 1: get the hardware working.
 
