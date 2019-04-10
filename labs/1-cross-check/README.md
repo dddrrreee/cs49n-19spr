@@ -22,14 +22,14 @@ check that your homework code is correct.
 
 After completing the lab you will:
 
-	1. Be able to check that your `gpio` code is equivalant to
-	everyone else's in the class by tracing all reads and writes
-	it does and comparing them to everyone else's implementation.
-	If even one person gets it right, then showing equivalance means
-	you got it right too.  And, nicely, automatically detect if any
-	subsequent modifications you do break the code.
+  1. Be able to check that your `gpio` code is equivalant to
+     everyone else's in the class by tracing all reads and writes
+	 it does and comparing them to everyone else's implementation.
+	 If even one person gets it right, then showing equivalance means
+	 you got it right too.  And, nicely, automatically detect if any
+	 subsequent modifications you do break the code.
 
-	2. Be able to quickly, correctly write a more full-featured
+   2. Be able to quickly, correctly write a more full-featured
 	`gpio` implementation by checking its equivalance against the
 	fairly complicated code used in the initial cs107e class.
 
@@ -45,12 +45,12 @@ much issue.
 
 #### Sign-off
 
-	1. Your `gpio_set_output`, `gpio_set_on`,
-	`gpio_set_off` give the same result as other peoples.  You can
-	run them in this order and just hash the end result.
+   1. Your `gpio_set_output`, `gpio_set_on`,
+   `gpio_set_off` give the same result as other peoples.  You can
+   run them in this order and just hash the end result.
 
-    2. Add an implementation and check for `gpio_set_input` and verify
-    you get the same result as everyone else.
+   2. Add an implementation and check for `gpio_set_input` and verify
+   you get the same result as everyone else.
 
 #### 0. Seperate out your gpio code from `blink.c`
 
@@ -60,6 +60,7 @@ As a small bonus, doing so will get you more familiar with Makefiles
 and header files, which will help your whole career.
 
 Mechanically:
+
   0. We are going to modify your Lab 0 code, so first copy the files in
      `0-blink/blink3` directory into `1-cross-check/blink`.
 
