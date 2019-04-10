@@ -149,7 +149,6 @@ that two `gpio` implementations are the same:
 
   1. They read and write the same addresses in the same order with
   the same values.
-
   2. They return the same result.    (For our implementations we
   did not return any result, so this just means that your code
   never crashes.)
@@ -158,13 +157,10 @@ If both checks pass then we know that both implementations are equivalent
 --- at least for the tested inputs.
 
 For this section:
-
-  1. Uncomment out the rule for `test-gpio` in `Makefile` and run `make`.
+   1. Uncomment out the rule for `test-gpio` in `Makefile` and run `make`.
        This will compile the test harness `test-gpio.c`.
-
    2. You can test each function individually by running `test-gpio 0`,
        `test-gpio 1`, etc.  (Look in the `test-gpio.c` file.)
-
    3. Again compare the results to your partner and post to the newsgroup.
 
 
