@@ -8,14 +8,14 @@ Lab: automatically cross-check your gpio against everyone else's.
 ======================================================================
 
 A goal of this course is that you will write every single line of
-(interesting) low-level code you use.  A good result of this approach is
+(interesting) low level code you use.  A good result of this approach is
 that you will understand everything and, unlike most OS courses, there
 will not be a lot of opaque, magical code that you have no insight into,
 other than sense of unease that it does important stuff beyond your ken.
 
-An obvious potential result of this strategy is that since you
-are writing all code your system depends on, a single bug can
-make the rest of the quarter miserable.  
+An obvious potential result of this strategy is that since you are writing
+all code your system depends on, a single bug can make the rest of the
+quarter miserable.
 
 This lab will have you build the inital pieces needed to automatically
 check that your homework code is correct.
@@ -36,45 +36,83 @@ After completing the lab you will:
 After this lab you can then most of the rest of the homework without too
 much issue.
 
-#### 1. Intercept all GPIO read and writes (10 minutes)
+***Important***:
+   - I know some of you modified your blink code last time without doing a
+   `git pull` first.  This will lead to conflicts.  These can be resolved
+   and you should figure out how to do so.  However, since we only have
+   two hours,  in the interests of time, it may be more efficient to
+   instead do a clean checkout and copy your working code into this lab.
 
-For this lab and the homework, we need to be able to override what
-happens when your code writes to GPIO memory.  Later in this course
-(when we build virtual memory), you will use memory protection tricks to
-intercept all loads and stores and cause them to do interesting things.
-For the moment, we will do things in a much simpler, though manual way.
+#### Sign-off
 
-	0.  Do a pull.	 Your `lab1/part3`  should now have an `rpi.h`
-	with definitions for `get32` and `put32`.
+	1. Your `gpio_set_output`, `gpio_set_on`,
+	`gpio_set_off` give the same result as other peoples.  You can
+	run them in this order and just hash the end result.
 
-	1. Run this code on the pi to make sure it works.  If it doesn't
-	work, fix it, or the rest of the lab is going to awful.  
+    2. Add an implementation and check for `gpio_set_input` and verify
+    you get the same result as everyone else.
 
-#### 2. Make a simple Unix testing harness (30 minutes).
+#### 0. Seperate out your gpio code from `blink.c`
+
+In order to make testing cleaner and for later labs, we need to pull your
+gpio code out of `blink.c` into its own implementation file `gpio.c`.
+As a small bonus, doing so will get you more familiar with Makefiles
+and header files, which will help your whole career.
+
+Mechanically:
+  0. We are going to modify your Lab 0 code, so first copy the files in
+     `0-blink/blink3` directory into `1-cross-check/blink`.
+
+     My general suggestion: (almost never) update-in-place a working
+     implementation to add new functionality.  Instead, make a copy
+     (so you always have a working, internally consistent version) and
+     modify the copy instead.  Some people will rely on `git commits`
+     and rollbacks, but I have seen this go very awry.  (Intuition: It's
+     safer, simpler, more robust to have a seperate working copy than
+     assume you can take a non-working copy and apply a set of verbs ---
+     e.g., `git` rollbacks --- to get to something working.)
+
+  1. Write a header file `gpio.h` with the `gpio` prototypes needed
+     by `blink.c`
+
+  2. Put all `gpio` function implementations  in a file `gpio.c` and 
+     remove them from `blink.c`.
+
+  3. Alter your `Makefile` to compile and link the new file together.
+
+  4. ***IMPORTANT***: rerun your blink to make sure it still works!
+
+#### 1. Make a fake implementation of `put32` and `get32`
 
 In order to make testing easy, we want to be able to run your r/pi code ---
 unaltered --- on your Unix laptop.  What do you need to do so?  
 
-In general:
-	
-	1.  You'll need to do any setup and then call `notmain`.
+  1. Compile it for Unix.   Fortunately, because of the way we wrote `
+     gpio.c` you can easily compile it both for RPI and to run on your
+     Unix laptop by simply switching compilers.  
 
-	2. You'll have to write fake versions of any pi-specific routines
-	your code calls.  Since your `blink` is simple, all you'll have
-	to do is provide fake implementations of `get32` and `put32`.
-	Also, since we can't do arm assembly code, you'll have to 
-	provide an empty definition for `delay` (for today: 
-	can just comment out the body of your version).
+  2. Override what happens when it writes to GPIO memory or calls ARM-specific
+     assembly code.   
 
-For the moment, you'll implement `get32` and `put32` by making a simple,
-tracing memory (an array that prints on each read or write) that on on
-reads of any address `addr` returns the last value written to it (just
-like normal memory) or, if no value was written, initializes the memory
-associated with `addr` to a random value and then returns that.
+     Since your `gpio.c` is simple, all you'll have to do is provide fake
+     implementations of `get32` and `put32` so that we can override what
+     happens when your code writes to GPIO memory.
 
-On `put32(addr,v)`: 
+First steps:
+  0. Do a pull if you haven't already. 
+  1. Look in `fake-put-get.c` and read the comments.  You will implement
+     `put32` and `get32`.
+  2. Before you start, run `make` and make sure everything compiles.
+     Note: the code will use your `gpio.h` and `gpio.c` from Part 0 so
+     if you get compile errors it's probably because you have stuff in the 
+     wrong place.
 
-	1. Create an entry for `addr` in `mem` if it doesn't exist.
+You'll now build a fake memory so that you can implement `put32` and
+`get32` (again, look in `fake-put-get.c` file).
+
+For `put32(addr,v)`: 
+
+	1. Create an entry for `addr` in your fake memory if `addr` doesn't exist.
 
 	2. Write `v` to `addrs` entry.
 
@@ -82,153 +120,58 @@ On `put32(addr,v)`:
 
 On `get32(addr)`:
 
-	1. If `addr` does not exist, insert `(addr, random())` but do
-	not print anything.
+	1. If `addr` does not exist, insert `(addr, random())` (but do not print anything).
 
 	2. Get the value `v` associated with `addr`.
 
-	3. Call `print_read(addr,v)`.
+	3. Call `print_read(addr,v)` to print out the address and value.
 
 	4. Return `v`.
 
 
 To test it:
-
-	1. Take your `blink.c` code from lab3 and put it in
-	`simple-cross-check/blink.c` here.
-
-	2. Compile.
-
-	3. Run `./test-blink` on Unix.  It should run without crashing and,
-	importantly, print out the values for each `put32` and `get32` in the
-	exact order they happened.  
-
-	4. If you pipe the result through `cksum`,
-	it should give you the same value as your lab partner has.
-
-	`./blink.unix | cksum`
-
-If these values match, you know your code worked the same as your partner's.
+	1. Run `./test-put-get > out` on Unix.	It should run without
+	   crashing and, importantly, print out the values for each
+	   `put32` and `get32` in the exact order they happened.
+    2. Get the checksum of the output (`cksum out`) and compare to your partner.
+    3. If these values match, you know your code worked the same as your partner's.
+    4. Now post to the newsgroup so everyone can compare.
+    5. If everyone matches, and one person got it right, we've proven that
+       everyone has gotten it right (at least for the values tested).
 
 #### 3. Check your code against everyone else (5 minutes)
 
-We want to check that your `gpio` code works the same as everyone
-else.  Given the `get32` and `put32` modifications above, a 
-simple, stringent approach is to check that:
+After you checked your fake `put32` and `get32` we now want to check that
+your `gpio` code works the same as everyone else.  Given the `get32` and
+`put32` modifications above, a simple, stringent approach is to check
+that two `gpio` implementations are the same:
 
-	1. It reads and writes the same addresses in the same order 
-	with the same values.
+	1. They read and write the same addresses in the same order with
+	the same values.
 
-	2. Returns the same result.  
+	2. They return the same result.    (For our implementations we
+	did not return any result, so this just means that your code
+	never crashes.)
 
-If so, then we know that --- at least for this input --- they have the
-same effect.
-
-Thus, if we run them on all "interesting" inputs, we can exhaust their
-behavior and compare.
+If both checks pass then we know that both implementations are equivalent
+--- at least for the tested inputs.
 
 For this section:
+	1. Uncomment out the rule for `test-gpio` in `Makefile` and run `make`.
+       This will compile the test harness `test-gpio.c`.
 
-	1. Test your `gpio_set_output`, `gpio_set_on` and `gpio_set_off`
-	using the full generator version (which runs them on many values)
-	individually against your partner.   
+    2. You can test each function individually by running `test-gpio 0`,
+       `test-gpio 1`, etc.  (Look in the `test-gpio.c` file.)
 
-	2. Post the cksum value for each to the newsgroup.
-
-	3. By the end of the class everyone should have the same result.
-
-
-#### 4. Sign-off
-
-	1. Your original `gpio_set_output`, `gpio_set_on`,
-	`gpio_set_off` give the same result as other peoples.  You can
-	run them in this order and just hash the end result.
-
-	2. Show that it gets the same value as the original.
-
-#### 5. Extra credit: Reimplement `gpio.o`
-
-We gave you a complicated implementation of gpio
-(`cs107e-complex-gpio/gpio.c`).  Check it's verion of `gpio_set_output`
-against yours.  Implement your own `gpio_set_func` and annotate each
-interesting thing with the page number and any sentence fragment from
-broadcom document.   Verify that your code is equivalant.  You'll have
-to modify the given gpio.c code since it does not do error checking and
-you should.
-
-#### 6. Advanced.
-
-Making the code more useful mostly involves expanding it so that 
-even when code writes values in different orders, you can still
-show equivalance.
-
-Modify your code to:
-
-	1. Check that your opposing blink code is identical to your 
-	partners.  What should you do about `delay_ms`?
-
-	2.  Show that its equivalant even when you set output pins
-	in different order.  Hint: you likely want to be able 
-	easily mark some memory as "last writer wins" where it doesn't
-	matter the actual order, just the final value.   I would 
-	do this by tracing each function, automatically marking the 
-	addresses it writes as last-writer addresses.
-
-	3. How to show equivalance when you set and clear in different
-	orders?  This is trickier.  You will need to come up with a clean
-	scheme to indicate that non-overlapping bit-writes do not 
-	interfere.
-
-	4. Within a device, often you can write some fields in 
-	any order, and there is a final "commit" location you write to
-	turn the device on.  Devise a good way to cleanly indicate these
-	differences.
+    3. Again compare the results to your partner and post to the newsgroup.
 
 
-	5. Strictly speaking, we need memory barriers when writing to
-	different devices.  Add support for checking this.
+#### 4. Add `gpio_set_input` and cross-check it.
 
-If you can do all of these you are in great shape to check some
-interesting code.
-
-Cross-checking Background
----------------------------------------------------------------------
-
-One way to compare two pieces of code A and B is to do so by just
-comparing the code itself.    This is what you've been doing so far
-in class: when your code doesn't work, you'll sometimes stare at 
-someone else; or when it does, you'll stare to verify you both did 
-the same.  This can be a fine approach.
-
-If two pieces of code are identical, then we can trivially do this
-automatically using something like `diff` or `strcmp`.  However, if the
-code differs in any way besides mere formatting, then a simple string
-comparison fails.
-
-The other approach is to just run tests, and compare the test output.
-A nice result of this approach is that even if two pieces of code
-look wildly different we can still automatically detect when they are
-equivalant by comparing their outputs.  This is why your classes use
-it for homeworks.
-
-The better your testing, the more chance you have of finding where
-the code differs.  The intuition here is that we don't actually care
-how the code works, just that it has the same end result --- i.e., its
-"side-effects" are the same.  In general, side-effects include anything
-code does visible to the outside world: its writes to memory, what it
-prints, any network packets it sends, etc.
-
-We're going to do a special case version of this check, since for the r/pi
-code so far, all we care about are reads and writes to device memory.
-If we record these, and compare them to another implementation, if
-they read or write the same memory in the same order, we know they are
-the same.  (Later, when we get more advanced, in some cases they can
-read or write in different orders, but we ignore this for now.)
-
-A drawback of this approach that we have glossed over, is that we
-only check equivalance on the inputs we run them on, so to really show
-equvalance we need to exhaust these.  Fortunately, if you look at the
-r/pi code we have written so far, it has simple inputs --- either none
-(where it just reads/writes device memory to initialize it) or a single
-pin input, which we can more-or-less exhaustively test (`0..31` and some
-illegal values).
+You'll see we can write an implementation even without having a way to run it.
+   1.  Implement the `gpio_set_input` function: add it to `gpio.c` and its prototype 
+   to `gpio.h`.
+   2. Add a test to the test harness.
+   3. Make it so that `test-gpio 4` runs it in isolation and `test-gpio 5` runs
+      all tests.
+   4. Cross-check your results.
