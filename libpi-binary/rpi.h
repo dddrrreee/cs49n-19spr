@@ -6,64 +6,68 @@
 #ifndef __RPI_H__
 #define __RPI_H__
 
-// We are running without an OS, but these will get pulled from gcc's include's,
-// not your laptops.
-// 
-// however, we don't want to do this too much, since unfortunately header files
-// have a bunch of code we cannot run, which can lead to problems.
-#include <stddef.h>
-#include <stdint.h>
-
-#if 0
-/*
- * Not sure if we should include these so you don't have to mess up 
- * the namespace since string.h includes all sortas of stuff.
+/*****************************************************************************
+ * pi types
  */
-int strcmp(const char *_p, const char *q);
-void *memset(void *_p, int c, size_t n) ;
-int memcmp(const void *_s1, const void *_s2, size_t nbytes);
-void *memcpy(void *dst, const void *src, size_t nbytes);
-int strncmp(const char* _s1, const char* _s2, size_t n);
+
+#ifndef FAKE_PI
+	// if we are compiling fake, then I think we want to override this.
+#   include <stddef.h>
+#   include <stdint.h>
+#if 0
+	typedef unsigned uint32_t;
+	typedef unsigned short uint16_t;
+	typedef unsigned char uint8_t;
+	typedef short int16_t;
+	typedef int int32_t;
+	typedef signed char int8_t;
+	typedef unsigned size_t;
+	typedef unsigned *uintptr_t;
+#	define offsetof(st, m) __builtin_offsetof(st, m)
+#endif
+
+	// shouldn't link these in if running on linux?  these conflict
+	int strcmp(const char *_p, const char *q);
+	void *memset(void *_p, int c, size_t n) ;
+	int memcmp(const void *_s1, const void *_s2, size_t nbytes);
+	void *memcpy(void *dst, const void *src, size_t nbytes);
+	int strncmp(const char* _s1, const char* _s2, size_t n);
+#else
+#	include <stddef.h>
+#endif
 
 char *strcat (char *dest, const char *src);
 size_t strlen(const char *p);
 char *strcpy(char * s1, const char * s2);
-#endif
 
-/*****************************************************************************
- * standard libc like functions for the pi.
- */
-int rpi_putchar(int c);
-
-int printk(const char *format, ...);
-int snprintk(char *buf, size_t n, const char *fmt, ...);
-int putk(const char *msg);
-
-int uart_hex(unsigned h);
-
-// a not very good rand()
-unsigned short rpi_rand(void);
 
 /*****************************************************************************
  * common device functions
  */
-
 // uart functions
 void uart_init(void);
 int uart_getc(void);
 void uart_putc(unsigned c);
 
-/***************************************************************************
- * simple timer functions.
- */
+// simple timer functions.
 void delay_cycles(unsigned ticks) ;
 unsigned timer_get_time(void) ;
 void delay_us(unsigned us) ;
 void delay_ms(unsigned ms) ;
 
-/****************************************************************************
- * Reboot the pi smoothly.
+// a not very good rand()
+unsigned short rpi_rand(void);
+
+/*****************************************************************************
+ * standard libc like functions for the pi.
  */
+int printk(const char *format, ...);
+    // __attribute__ ((format (printf, 1, 2)));
+int snprintk(char *buf, size_t n, const char *fmt, ...);
+int putk(const char *msg);
+int uart_hex(unsigned h);
+
+int rpi_putchar(int c);
 
 // reboot the pi.
 void rpi_reboot(void) __attribute__((noreturn));
@@ -71,41 +75,43 @@ void rpi_reboot(void) __attribute__((noreturn));
 // reboot after printing out a string to cause the unix my-install to shut down.
 void clean_reboot(void) __attribute__((noreturn));
 
+// set pc value to <addr>
+void BRANCHTO( unsigned addr);
+
+// a no-op routine called to defeat the compiler.
+void dummy(unsigned);
+
 
 /*******************************************************************************
- * simple memory allocation: no free, just have to reboot().
+ * simple memory allocation.
  */
 
-// returns 0-filled memory.
-void *kmalloc(unsigned nbytes) ;
+void *kmalloc_heap_end(void);
+void *kmalloc_heap_start(void);
 
-// currently no-ops.
 void kfree(void *p);
 void kfree_all(void);
+// returns 0-filled memory aligned to <nbits_alignment>
+void *kmalloc_aligned(unsigned nbytes, unsigned nbits_alignment);
+// returns 0-filled memory.
+void *kmalloc(unsigned nbytes) ;
 
 // set where the heap starts.
 void kmalloc_set_start(unsigned _addr);
 
 /*****************************************************************************
- * memory related helpers
+ * memory barriers
  */
-
-// memory barrier.
+void mb(void);
 void dmb(void);
-// sort-of write memory barrier (more thorough).  dsb() >> dmb().
 void dsb(void);
 
-// use this if you need a device memory barrier.
+// use this if you need memory barriers.
 void dev_barrier(void);
-
-// cache enable
-void enable_cache(void) ;
-void disable_cache(void) ;
 
 
 /*****************************************************************************
- * Low-level code: you could do in C, but these are in assembly to defeat
- * the compiler.
+ * put/get from memory in a way that we can override easily + defeat compiler.
  */
 // *(unsigned *)addr = v;
 void PUT32(unsigned addr, unsigned v);
@@ -134,10 +140,13 @@ unsigned char get8(const volatile void *addr);
 // jump to <addr>
 void BRANCHTO(unsigned addr);
 
-// a no-op routine called to defeat the compiler.
-void dummy(unsigned);
+// cache enable
+void enable_cache(void) ;
+void disable_cache(void) ;
 
-#include "cs49n-src/gpio.h"
-#include "cs49n-libc/assert.h"
+unsigned rpi_get_cpsr(void);
+
+#include "gpio.h"
+#include "assert.h"
 
 #endif
