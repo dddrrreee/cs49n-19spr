@@ -28,9 +28,9 @@ void set_user_level(void) {
 }
 
 void rpi_reboot(void) {
-    if(!at_user_level()) {
+    if(at_user_level()) {
         set_user_level();
-        assert(at_user_level());
+        assert(!at_user_level());
     }
 
     // gives uart time to flush: should just call flush directly.
