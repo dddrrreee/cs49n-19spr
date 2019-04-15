@@ -1,26 +1,32 @@
 ## Hello r/pi.
 
-As you've probably discovered, debugging without even `printf` is a hassle.  Before
-we do a bunch of devices, let's first get `printf` working so that it's a bit easier.
+As you've probably discovered, debugging without even `printf` is
+a hassle.  Before we do a bunch of devices, today's lab first gets
+`printf` working so that it's a bit easier.
 
-Doing so will involve a few steps.  The big picture:
+For historical reasons we call `printf` `printk` since it's running at
+privileged level --- in that errors crash the machine versus causing a
+segmentation fault --- and our implementation isn't quite `printf`.
+
+Getting `printk` setup will involve doing a 
+few steps.  The big picture:
   1. Setup and compile the new `libpi`.
-  2. Write a GPIO function that `printk` needs.  (For historical reasons
-     we call `printf` `printk` since it's running at privileged level and
-     isn't quite `printf`.
+  2. Write a GPIO function that `printk` needs.  
   3. Compile and run `hello` in today's lab (`2-hello/hello`).
   4. Profit.
 
 As a bonus these steps will re-enforce using Makefiles and standard Unix
 commands.  Especially: 
  1. If you can't find a file, try to find it using `ls`, `find`, etc.   
- 2. If your editor supports it, use tags.  
- 3. Get used to working in multiple directories: I would strongly
-    strongly encourage
-    you to make things much easier by having two terminal windows up
-    side by side  so you can easily operate in mutiple contexts.
+ 2. Related: If your editor supports it, use tags.    This allows you to 
+    simply type a command sequence and jump to the function's or variable's
+    definition.
+ 3. Get used to working in multiple directories: I would strongly,
+    strongly encourage you to make doing so much easier by having two
+    terminal windows up side by side so you can easily operate in
+    multiple contexts.
 
-#### Checkoff:
+#### Check-off:
 
 Show:
  1. That you wrote cross-checked your `gpio_set_function`.
@@ -40,7 +46,6 @@ The key pieces:
   - `cs49n-libc`: `.c` implementation of standard library functions
     (often ripped off from `uClibc`).  These include `memcpy`, `memset`
     and, of course, `printk`.
-
 
     These implementations are almost entirely generic and contain nothing
     specific to the pi itself.   If you need a missing `libc` function,
@@ -69,17 +74,25 @@ shouldn't be too hard:
    2. `pwd` --- the path this prints out is what you should set `CS49N_LIBPI_PATH` 
       to.
    3. If you use `bash` edit your `~/.bash_profile` and add `export
-      CS49N_LIBPI_PATH <path>` where `<path>` is the path from step 2.
-   4. `source ~/.bash_profile` in any terminal you're going to use.
+      CS49N_LIBPI_PATH <path>` where `<path>` is the path from step 2.  If you 
+      have `tcsh`, do something similar to `.tcshrc`.
+   4. `source ~/.bash_profile` in every single terminal you're going to use or just
+      open new ones.
    5. Go back to `libpi` and make it.  It should compile without errors.
 
 #### Step 3: implement `gpio_set_function` and cross-check it  (40 minutes)
 
+This is the one step where you write some code.  But it's mainly just adapting
+the GPIO code you already implemented.
+
 In order for `printk` to work, we have to initialize the UART so that
-it can talk to it (actually, not strictly true given that we used the
-bootloader: can you say why?).  If you run:
-   - `arm-none-eabi-nm cs49n-objs/cs49n-uart.o`
-It should print out:
+`printk` can use it to communicate with your laptop(*).  
+
+One way to see what we need is to simply run 
+`arm-none-eabi-nm cs49n-objs/cs49n-uart.o` in the `libpi` directory.  It will
+print out the symbols defined and referenced in `cs49n-uart.o`.  In our case, it
+should print:
+
              U dmb
              U dsb
              U gpio_set_function
@@ -88,38 +101,41 @@ It should print out:
     00000090 T uart_putc
 
 The `U` indicates the symbol is referenced by `cs49n-uart.o` but not defined yet:
-`dmb`, `dsb` (which we provide in libpi) and `gpio_set_function` which you implement.
+`dmb`, `dsb` (we provide both in libpi) and `gpio_set_function` which you implement.
 The `T` denotes the functions that the file both defines and exports:
 `uart_getc`, `uart_init`, and `uart_putc`.
 
-Since it needs `gpio_set_function` lets implement.  This is just a more generic
-version of your `gpio_set_output` and `gpio_set_input`:
+Since it needs `gpio_set_function` let's implement it.  This is just a
+more generic version of your `gpio_set_output` and `gpio_set_input`.  You can
+see the interface description in `cs49n-src/rpi.h`:
 
     // set GPIO function for <pin> (input, output, alt...).  settings for other
     // pins should be unchanged.
     void gpio_set_function(unsigned pin, gpio_func_t function);
 
-Where `gpio_func_t` is defined in `rpi.h`.
-
 Write this code, and cross-check it against everyone on Unix.
+
+(*) Strictly speaking, we do not actually have to initialize the UART
+if we used the bootloader to run a program: can you say why?).
 
 #### Step 4: hello (10 minutes)
 
-Now we finish.  This should be trivial.
+Now we get `hello` to run.  This should be trivial.
 
-First setup `libpi` to use your `gpio.c`:
-   1. Copy your `gpio.c` into `libpi`.
+First set-up `libpi` to use your `gpio.c`:
+   1. Copy `gpio.c` into `libpi`.
    2. To minimize `git` conflicts, the file `put-your-src-here.mk`
-      holds a list of all the files you add.   Uncomment the `gpio.o`
-      in it.  The `Makefile` is setup so that it will now automatically
-      compile and include your `gpio` in `libpi`.
+      will holds a list of all the files you add over the quarter.
+      For today, simply uncomment the `gpio.o` in it by removing the `#`.
+      The `Makefile` is setup so that it will now automatically compile
+      and include your `gpio` in `libpi`.
 
-   3. `make`: `libpi.a` should build without errors and a `gpio.o` should
-      be in the `objs` directory (verify this!).
+   3. Run `make` in `libpi`: `libpi.a` should build without errors and a
+      `gpio.o` should be in the `objs` directory (verify this!).
 
 Second, compile `hello`:
-   1. Go to `2-hello/hello` and `make`.  This should produce a `hello.bin`.
-   2. Send it to the pi: It should print `hello` and then exit.  Run it a few
+   1. Go to `2-hello/hello` and run `make`.  This should produce a `hello.bin`.
+   2. Send it to the pi with the bootloader: It should print `hello` and then exit.  Run it a few
       times to make sure everything is ok.
    3. DONE!
 
@@ -150,10 +166,10 @@ This should be fast.
    2. Copy `hello/Makefile`  to `blink`: `cp hello/Makefile blink`.
    3. Modify `Makefile` to compile `blink`.
    4. Copy your `blink.c` over.  Change it to `#include "rpi.h"`.
-   5. Get rid of any unneeded code.
+   5. Get rid of any unneeded code and add a call to `clean_reboot()` at the end.
    6. Compile and run it!
 
-This is a common pattern: everytime we do a new thing, make sure old
+This is a common pattern: every time we do a new thing, make sure old
 things work.
 
 #### Extra
