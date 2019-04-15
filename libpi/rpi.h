@@ -56,10 +56,21 @@ void uart_putc(unsigned c);
 /***************************************************************************
  * simple timer functions.
  */
+
+// delays for <ticks> (each tick = a few cycles)
 void delay_cycles(unsigned ticks) ;
-unsigned timer_get_time(void) ;
+// delay for <us> microseconds.
 void delay_us(unsigned us) ;
+// delay for <ms> milliseconds
 void delay_ms(unsigned ms) ;
+
+// returns time in usec.
+// NOTE: this can wrap around!   do not do direct comparisons.
+unsigned timer_get_usec(void) ;
+ 
+// returns time in nanosec.
+// NOTE: this can wrap around!   do not do direct comparisons.
+unsigned timer_get_ns(void) ;
 
 /****************************************************************************
  * Reboot the pi smoothly.

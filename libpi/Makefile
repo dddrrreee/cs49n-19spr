@@ -14,7 +14,7 @@ OUR_OBJS = \
         cs49n-libc/putk.o  \
         cs49n-libc/va-printk.o  \
         cs49n-libc/uart-hex.o  \
-        cs49n-libc/rand.o   \
+        cs49n-libc/rpi-rand.o   \
         cs49n-libc/memcpy.o   \
         cs49n-libc/memset.o   \
         cs49n-libc/memcmp.o   \
