@@ -1,4 +1,4 @@
-### Lab: automatically cross-check your gpio against everyone else's.
+### Lab: automatically cross-check your GPIO code against everyone else's.
 
 A goal of this course is that you will write every single line of
 (interesting) low level code you use.  A good result of this approach is
@@ -10,20 +10,20 @@ An obvious potential result of this strategy is that since you are writing
 all code your system depends on, a single bug can make the rest of the
 quarter miserable.
 
-This lab will have you build the inital pieces needed to automatically
+This lab will have you build the initial pieces needed to automatically
 check that your homework code is correct.
 
 After completing the lab you will:
 
-  1. Be able to check that your `gpio` code is equivalant to
+  1. Be able to check that your `gpio` code is equivalent to
      everyone else's in the class by tracing all reads and writes
 	 it does and comparing them to everyone else's implementation.
-	 If even one person gets it right, then showing equivalance means
+	 If even one person gets it right, then showing equivalence means
 	 you got it right too.  And, nicely, automatically detect if any
 	 subsequent modifications you do break the code.
 
    2. Be able to quickly, correctly write a more full-featured
-	`gpio` implementation by checking its equivalance against the
+	`gpio` implementation by checking its equivalence against the
 	fairly complicated code used in the initial cs107e class.
 
 After this lab you can then most of the rest of the homework without too
@@ -46,10 +46,10 @@ much issue.
    you get the same result as everyone else.
 
 ----------------------------------------------------------------------
-#### 0. Seperate out your gpio code from `blink.c`
+#### 0. Separate out your GPIO code from `blink.c`
 
 In order to make testing cleaner and for later labs, we need to pull your
-gpio code out of `blink.c` into its own implementation file `gpio.c`.
+GPIO code out of `blink.c` into its own implementation file `gpio.c`.
 As a small bonus, doing so will get you more familiar with Makefiles
 and header files, which will help your whole career.
 
@@ -63,7 +63,7 @@ Mechanically:
      (so you always have a working, internally consistent version) and
      modify the copy instead.  Some people will rely on `git commits`
      and rollbacks, but I have seen this go very awry.  (Intuition: It's
-     safer, simpler, more robust to have a seperate working copy than
+     safer, simpler, more robust to have a separate working copy than
      assume you can take a non-working copy and apply a set of verbs ---
      e.g., `git` rollbacks --- to get to something working.)
 
