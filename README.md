@@ -1,9 +1,3 @@
----
-layout: page
-title: Overview
-show_on_index: true
----
-
 #### Precis
 
 This is a lab-based class.  We will do two 2-hour labs each week.
@@ -26,9 +20,7 @@ such prose is one of the main super-powers of good systems hackers.
 Prerequisites:
    1. A MacOS or Linux machine.  Not windows, not Windows running VMare.
       We've had too many issues.
-
    2. Able to install and setup the tool chain.  See [Lab1](labs/lab1/README.md).
-
    3. Gone through K&R at least twice, including once recently.
 
 Who this class is for:
@@ -42,19 +34,15 @@ and/or are not already interested in the topic, then it's probably better
 to take a different class.
 
 Before class:
-
    0. Clone this repo: `git clone git@github.com:dddrrreee/cs49n-19spr.git`.
    You may need to install `git` on your laptop.
-
    1. Make sure you have some way to write a micro-SD card and understand
    how to do so.  Note that newer Macs do not have SD card slots so you
    will need an adaptor.  Make sure when you plug in an SD card you know
    how to find where it is mounted. 
-
    2. Make sure you have some way to plug in a USB adaptor.   Note,
    as above, newer Macs do not have USB ports so you may need a USB-C
    to USB adaptor.
-
    3. Figure out how to add a directory to your `PATH`.  This will
    be valuable all quarter. The exact mechanics are shell-dependent.
    For `bash` look in `.bashrc`, for `tcsh` look in `.tcshrc` etc.
@@ -63,18 +51,16 @@ Grading:
 
    1. Each lab will have a check-off that you need to complete, if not
    in the lab itself, within 7 days.
-
    2. There is a final project.  You will have an expense account at
    `sparkfun.com` and `adafruit.com` to buy whatever devices you like
    and build something interesting.
-
    3. Participation: if you have something to say, can help people out,
    figure out interesting things, etc you'll do fine.
-
    4. Class is not optional: from past experience, if someone falls
    behind, it's very hard to catch up.  So other than a few pre-excused
    absences, you must be at each lab.
 
+----------------------------------------------------------------------
 ### Overview
 
 Rather than me talking alot, this class will mainly be you doing alot.
