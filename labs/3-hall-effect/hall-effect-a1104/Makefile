@@ -11,6 +11,9 @@ endif
 START = $(CS49N_LIBPI_PATH)/cs49n-start.o
 MEMMAP = $(CS49N_LIBPI_PATH)/memmap
 
+LPI_FAKE_PATH = $(CS49N_LIBPI_PATH)/../libpi-fake
+LPI_FAKE = $(CS49N_LIBPI_PATH)/../libpi-fake/libpi-fake.a
+
 # useful set of defines.
 include $(CS49N_LIBPI_PATH)/includes.mk
 
@@ -23,8 +26,10 @@ all: libpi $(NAME).bin
 libpi:
 	@make -C $(CS49N_LIBPI_PATH)
 
-fake: $(NAME).c
-	gcc -I$(CS49N_LIBPI_PATH) -O -Wall -Werror $(NAME).c -o fake-$(NAME) ../libpi-fake/libpi-fake.a
+
+fake: $(NAME).c $(LPI_FAKE)
+	@make -C $(LPI_FAKE_PATH)
+	gcc -I$(CS49N_LIBPI_PATH) -O -Wall -Werror $(NAME).c -o fake-$(NAME) $(LPI_FAKE)
 
 $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 	$(LD) $(START) $(OBJS) -T $(MEMMAP) -o $(NAME).elf  $(LPI)
