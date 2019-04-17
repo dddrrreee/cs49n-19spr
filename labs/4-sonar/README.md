@@ -13,6 +13,11 @@ have to do when you write drivers for devices on your own (with the
 simplification that in these two cases we know its possible to get the
 needed information!).
 
+<table><tr><td>
+  <img src="images/hc-sr04.jpg"/>
+</td></tr></table>
+
+
 ### Check-off
 
 For lab:
