@@ -32,6 +32,7 @@ Show:
  1. That you wrote cross-checked your `gpio_set_function`.
  2. That `hello` works.
 
+----------------------------------------------------------------------
 #### Step 1: update `libpi` (10 minutes)
 
 Do a `git pull` in your `cs49n` directory, you'll notice there's now
@@ -65,6 +66,7 @@ The key pieces:
 
   - `objs`: this is where all the compiled code gets put.
 
+----------------------------------------------------------------------
 #### Step 2: compile `libpi` (10 minutes)
 
 This mainly involves setting the `CS49N_LIBPI_PATH` environment variable, which 
@@ -80,6 +82,7 @@ shouldn't be too hard:
       open new ones.
    5. Go back to `libpi` and make it.  It should compile without errors.
 
+----------------------------------------------------------------------
 #### Step 3: implement `gpio_set_function` and cross-check it  (40 minutes)
 
 This is the one step where you write some code.  But it's mainly just adapting
@@ -118,6 +121,7 @@ Write this code, and cross-check it against everyone on Unix.
 (*) Strictly speaking, we do not actually have to initialize the UART
 if we used the bootloader to run a program: can you say why?).
 
+----------------------------------------------------------------------
 #### Step 4: hello (10 minutes)
 
 Now we get `hello` to run.  This should be trivial.
@@ -159,6 +163,7 @@ them, so that we: (1) cannot possibly miss there was a bug and (2)
 know exactly where it is.  Otherwise, it can take days (or longer)
 versus minutes to find it.  
 
+----------------------------------------------------------------------
 #### Step 5: make sure `blink` still works (10 minutes) 
 
 This should be fast.
@@ -172,6 +177,7 @@ This should be fast.
 This is a common pattern: every time we do a new thing, make sure old
 things work.
 
+----------------------------------------------------------------------
 #### Extra
 
 If you finish:
