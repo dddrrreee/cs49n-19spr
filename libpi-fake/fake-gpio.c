@@ -19,8 +19,7 @@ void gpio_write(unsigned pin, unsigned v) {
 unsigned gpio_read(unsigned pin) {
 #if 1
     unsigned val = random();
-    unsigned v = (val&1);
-    // unsigned v = (val%bias != 0);
+    unsigned v = (val%bias != 0);
 #else
     static unsigned val;
     unsigned v= val++ & 1;
