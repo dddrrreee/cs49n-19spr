@@ -1,5 +1,4 @@
-## Lab: automatically cross-check your gpio against everyone else's.
-======================================================================
+### Lab: automatically cross-check your gpio against everyone else's.
 
 A goal of this course is that you will write every single line of
 (interesting) low level code you use.  A good result of this approach is
@@ -108,32 +107,25 @@ You'll now build a fake memory so that you can implement `put32` and
 `get32` (again, look in `fake-put-get.c` file).
 
 For `put32(addr,v)`: 
-
-	1. Create an entry for `addr` in your fake memory if `addr` doesn't exist.
-
-	2. Write `v` to `addrs` entry.
-
-	3. Call `print_write(addr,v)`.
+  1. Create an entry for `addr` in your fake memory if `addr` doesn't exist.
+  2. Write `v` to `addrs` entry.
+  3. Call `print_write(addr,v)`.
 
 On `get32(addr)`:
 
-	1. If `addr` does not exist, insert `(addr, random())` (but do not print anything).
-
-	2. Get the value `v` associated with `addr`.
-
-	3. Call `print_read(addr,v)` to print out the address and value.
-
-	4. Return `v`.
-
+  1. If `addr` does not exist, insert `(addr, random())` (but do not print anything).
+  2. Get the value `v` associated with `addr`.
+  3. Call `print_read(addr,v)` to print out the address and value.
+  4. Return `v`.
 
 To test it:
-	1. Run `./test-put-get > out` on Unix.	It should run without
+  1. Run `./test-put-get > out` on Unix.	It should run without
 	   crashing and, importantly, print out the values for each
 	   `put32` and `get32` in the exact order they happened.
-    2. Get the checksum of the output (`cksum out`) and compare to your partner.
-    3. If these values match, you know your code worked the same as your partner's.
-    4. Now post to the newsgroup so everyone can compare.
-    5. If everyone matches, and one person got it right, we've proven that
+  2. Get the checksum of the output (`cksum out`) and compare to your partner.
+  3. If these values match, you know your code worked the same as your partner's.
+  4. Now post to the newsgroup so everyone can compare.
+  5. If everyone matches, and one person got it right, we've proven that
        everyone has gotten it right (at least for the values tested).
 
 ----------------------------------------------------------------------
@@ -154,11 +146,11 @@ If both checks pass then we know that both implementations are equivalent
 --- at least for the tested inputs.
 
 For this section:
-   1. Uncomment out the rule for `test-gpio` in `Makefile` and run `make`.
+ 1. Uncomment out the rule for `test-gpio` in `Makefile` and run `make`.
        This will compile the test harness `test-gpio.c`.
-   2. You can test each function individually by running `test-gpio 0`,
+ 2. You can test each function individually by running `test-gpio 0`,
        `test-gpio 1`, etc.  (Look in the `test-gpio.c` file.)
-   3. Again compare the results to your partner and post to the newsgroup.
+ 3. Again compare the results to your partner and post to the newsgroup.
 
 #### 4. Add `gpio_set_input` and cross-check it.
 
