@@ -17,7 +17,9 @@ void gpio_write(unsigned pin, unsigned v) {
     trace("pin=%d, val=%d\n", pin, v);
 }
 unsigned gpio_read(unsigned pin) {
-    unsigned v= (random()%bias != 0);
+    static unsigned val;
+    unsigned v= val++ & 1;
+// (random()%bias != 0);
     trace("pin=%d, returning=%d\n", pin, v);
     return v;
 }
