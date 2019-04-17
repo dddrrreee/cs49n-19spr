@@ -55,13 +55,13 @@ int main(int argc, char *argv[]) {
         n = atoi(argv[1]);
 
     fake_timer_max_delta(55000);
+
+    srandom(49);
+    // make sure that everyone has the same random.
+    assert(89789692 == random());
     if(n)
         fancy_check(n);
-    else {
-        srandom(49);
-        // make sure that everyone has the same random.
-        assert(89789692 == random());
+    else
         notmain();
-    }
     return 0;
 }
