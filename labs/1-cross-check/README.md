@@ -1,10 +1,4 @@
----
-layout: page
-title: Quick overview.
-show_on_index: true
----
-
-Lab: automatically cross-check your gpio against everyone else's.
+## Lab: automatically cross-check your gpio against everyone else's.
 ======================================================================
 
 A goal of this course is that you will write every single line of
@@ -52,6 +46,7 @@ much issue.
    2. Add an implementation and check for `gpio_set_input` and verify
    you get the same result as everyone else.
 
+----------------------------------------------------------------------
 #### 0. Seperate out your gpio code from `blink.c`
 
 In order to make testing cleaner and for later labs, we need to pull your
@@ -83,6 +78,7 @@ Mechanically:
 
   4. ***IMPORTANT***: rerun your blink to make sure it still works!
 
+----------------------------------------------------------------------
 #### 1. Make a fake implementation of `put32` and `get32`
 
 In order to make testing easy, we want to be able to run your r/pi code ---
@@ -140,6 +136,7 @@ To test it:
     5. If everyone matches, and one person got it right, we've proven that
        everyone has gotten it right (at least for the values tested).
 
+----------------------------------------------------------------------
 #### 3. Check your code against everyone else (5 minutes)
 
 After you checked your fake `put32` and `get32` we now want to check that
