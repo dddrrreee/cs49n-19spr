@@ -152,6 +152,7 @@ For this section:
        `test-gpio 1`, etc.  (Look in the `test-gpio.c` file.)
  3. Again compare the results to your partner and post to the newsgroup.
 
+----------------------------------------------------------------------
 #### 4. Add `gpio_set_input` and cross-check it.
 
 You'll see we can write an implementation even without having a way to run it.
