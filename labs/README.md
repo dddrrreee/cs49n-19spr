@@ -25,7 +25,7 @@ are quick (< 60 minutes), some are longer.
      mistake makes more a miserable quarter.  Thus, we show you modern
      tricks for ensuring your code is correct.
 
-  2. [hello][2-hello/): As you've noticed, debugging without even having
+  2. [hello](2-hello/): As you've noticed, debugging without even having
      `printf` is a hassle   Before we do a bunch of devices, we first
      get `printf` working by writing a couple GPIO functions and then
      putting then `libpi`.
