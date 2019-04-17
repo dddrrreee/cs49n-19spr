@@ -20,8 +20,8 @@ int printk(const char *fmt, ...) {
     va_list args;
 
     va_start(args, fmt);
-        printf("PI:");
-        int res = vprintf(fmt, args);
+        fprintf(stderr, "PI:");
+        int res = vfprintf(stderr, fmt, args);
     va_end(args);
     return res;
 }
