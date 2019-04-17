@@ -23,6 +23,9 @@ all: libpi $(NAME).bin
 libpi:
 	@make -C $(CS49N_LIBPI_PATH)
 
+fake: $(NAME).c
+	gcc -I$(CS49N_LIBPI_PATH) -O -Wall -Werror $(NAME).c -o fake-$(NAME) ../libpi-fake/libpi-fake.a
+
 $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 	$(LD) $(START) $(OBJS) -T $(MEMMAP) -o $(NAME).elf  $(LPI)
 	$(OD) -D $(NAME).elf > $(NAME).list
@@ -57,15 +60,12 @@ $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 .S.o: Makefile
 	$(CC) -c $(CPP_ASFLAGS) $< -o $@
 
-run:
-	my-install $(NAME).bin
-
 tags:
 	@rm -f tags
 	ctags *.[chsS] $(CS49N_LIBPI_PATH)/*.[chsS]
 
 # remove compilation products
 clean:
-	rm -f replay *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
+	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
 
 .PHONY: run libpi tags clean
