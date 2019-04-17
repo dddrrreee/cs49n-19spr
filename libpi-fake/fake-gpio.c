@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include "fake-pi.h"
 
-static int bias = 2;
+static long bias = 2;
 
 // bias it more than 50/50.
 void fake_gpio_set_bias(int n) {
     bias = n + 2;
-    trace("bias==%d\n", bias);
+    trace("bias==%ld\n", bias);
 }
 
 void gpio_write(unsigned pin, unsigned v) {
