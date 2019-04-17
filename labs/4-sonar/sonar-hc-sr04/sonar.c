@@ -5,7 +5,7 @@
 
 
 // use this timeout so everyone is consistent.
-static unsigned timeout = 30000;
+static unsigned timeout = 55000;
 
 // gpio_read(pin) until either:
 //  1. gpio_read(pin) != v ==> return 1.
