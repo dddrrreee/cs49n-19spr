@@ -27,7 +27,7 @@ OUR_OBJS = \
 OBJS = $(OUR_OBJS)  $(YOUR_OBJS)
 
 # these are obj files we give you.
-SUPPORT_OBJS= cs49n-objs/cs49n-uart.o
+SUPPORT_OBJS= cs49n-objs/*.o
 START= cs49n-start
 
 # if you get source from other directories, add them to vpath too.
