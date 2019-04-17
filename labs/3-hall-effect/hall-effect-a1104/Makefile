@@ -42,23 +42,12 @@ $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 
 # should re-do this to use the libpi makefile.
 
-# http://scottmcpeak.com/autodepend/autodepend.html
-# compile and generate dependency info;
-# more complicated dependency computation, so all prereqs listed
-# will also become command-less, prereq-less targets
-#   sed:    strip the target (everything before colon)
-#   sed:    remove any continuation backslashes
-#   fmt -1: list words one per line
-#   sed:    strip leading spaces
-#   sed:    add trailing colons
-%.o: %.c  Makefile
-	$(CC) -c $(CFLAGS) $*.c -o $*.o
-	$(CC) -MM $(CFLAGS) $*.c > $*.d
-	@mv -f $*.d $*.d.tmp
-	@sed -e 's|.*:|$*.o:|' < $*.d.tmp > $*.d
-	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | \
-	  sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
-	@rm -f $*.d.tmp
+%.d: %.c Makefile
+	$(CC) $(CFLAGS) -c -MT $@ -MMD -MP -MF $@ $< -o $*.o
+
+%.o : %.c
+%.o : %.c %.d
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 .s.o: Makefile
 	$(AS) $(ASFLAGS) $< -o $@
@@ -73,5 +62,6 @@ tags:
 # remove compilation products
 clean:
 	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
+	make -C $(LPI_FAKE_PATH) clean
 
 .PHONY: run libpi tags clean
