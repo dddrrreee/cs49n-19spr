@@ -133,14 +133,13 @@ First set-up `libpi` to use your `gpio.c`:
       For today, simply uncomment the `gpio.o` in it by removing the `#`.
       The `Makefile` is setup so that it will now automatically compile
       and include your `gpio` in `libpi`.
-
    3. Run `make` in `libpi`: `libpi.a` should build without errors and a
       `gpio.o` should be in the `objs` directory (verify this!).
 
 Second, compile `hello`:
    1. Go to `2-hello/hello` and run `make`.  This should produce a `hello.bin`.
-   2. Send it to the pi with the bootloader: It should print `hello` and then exit.  Run it a few
-      times to make sure everything is ok.
+   2. Send it to the pi with the bootloader: It should print `hello`
+      and then exit.  Run it a few times to make sure everything is ok.
    3. DONE!
 
 You're now in a much better situation to write a bunch of device code.
@@ -153,7 +152,6 @@ the worst thing possible. Consider what happens if:
   2. `printk` prints the wrong values (or doesn't print anything);
 
 Then:
-
   3. You'll think your code is computing the wrong thing when it's not
     (leading to chaos) or that it crashed when it didn't (causing you
     to look in the wrong place).
