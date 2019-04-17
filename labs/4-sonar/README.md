@@ -30,6 +30,7 @@ Extension:
     it seems!
 
 
+----------------------------------------------------------------------
 ### Implementing the HC-SR04 sonar driver.
 
 First, get the datasheet.  The first one is a 3-page sheet that isn't
@@ -43,10 +44,8 @@ for the information you need.
 Second, implement three functions:
  1. `hc_sr04_init(trigger, echo)`: called with the GPIO pins to use for 
     `trigger` and `echo`.  It sets these up and initializes the device.
-
  2. `hc_sr04_get_distance`: compute the distance in inches using the sonar
      and returns it.
-
  3. `read_while_eq(pin,v,timeout)`, a helper function that blocks reading `pin`
      until either (1) `gpio_read(pin)` is not equal to `v` or (2) `timeout`
      microseconds have expired.   
@@ -68,11 +67,8 @@ Some additional hints, you'll need to:
     `gpio_pulldown` but you should start replacing our code with your own.
     (using the broadcom pdf in the `docs/` directory).  If you don't 
     the device will often (maybe always) work, but could easily not.
-
  1. Initialize the device (pay attention to time delays here).
-
  2. Do a send (again, pay attention to any needed time delays).
-        
  3. Measure how long it takes to receive the echo and compute round trip
     by converting that time to distance using the datasheet formula.
     Note, we do not have floating point!  So the way you compute this must
@@ -82,17 +78,17 @@ Trouble-shooting.
 
   1. Readings can be noisy --- you may need to require multiple
   high (or low) readings before you decide to trust the signal.
-
   2. There are conflicting accounts of what value voltage you
   need for `Vcc`.
-
   3. The initial 3-page data sheet you'll find sucks; look for
   a longer one. 
 
+----------------------------------------------------------------------
 ### Extension 1: write your own `gpio_pulldown` code 
 
 You'll have to use the Broadcom document. It's kind of confusing.  This [page](http://what-when-how.com/Tutorial/topic-334jc9v/Raspberry-Pi-Hardware-Reference-126.html) gives an easier-to-follow example.
 
+----------------------------------------------------------------------
 ### Extension 2: use the Sonar distance to control an LED.
 
 As your distance gets closer or farther,  vary the LED brightness **smoothly**.
