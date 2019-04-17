@@ -26,8 +26,9 @@ all: libpi $(NAME).bin
 libpi:
 	@make -C $(CS49N_LIBPI_PATH)
 
+.PHONY: fake libpi
 
-fake: $(NAME).c $(LPI_FAKE)
+fake: 
 	@make -C $(LPI_FAKE_PATH)
 	gcc -I$(CS49N_LIBPI_PATH) -O -Wall -Werror $(NAME).c -o fake-$(NAME) $(LPI_FAKE)
 
