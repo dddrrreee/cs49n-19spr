@@ -3,6 +3,11 @@
 For this lab you're going to implement the sensor driver on your own
 for a simple a simple magnetic sensing device (a "hall effect" sensor).
 
+
+<table><tr><td>
+  <img src="images/hall.jpg"/>
+</td></tr></table>
+
 There's some simple skeleton code, but you're going to do all the work
 yourself, including getting the data sheets and anything else you need.
 This process will foreshadow what you'll have to do when you write drivers
@@ -28,21 +33,25 @@ you need:
 
   1. What the pins do (input power, output, ground).
   2. What voltage you need for power (`Vcc`).
-  3. What reading you get when the the device is "open" (not signaling
-	anything).
-  4. what reading you get when the device is closed / signaling (`Vout`).
+  3. What reading you get when the device is closed / signaling (`Vout`).
 
 If any of these values are out of range of the pi, you can't connect
 directly.
 
-Notice what the range of values are: if "low" is close to zero, but not
-guaranteed to be zero, you'll have to set the input pin as a `pulldown
-resistor` to clean up the signal.  We provided a function to do so
-(`gpio_set_pulldown(pin)`).
+Also, you need to figure out what reading you get when the device is
+"open" (not signaling anything) --- in this open state devices are
+often not guaranteed to have stable, well-defined output signals.
+Thus, you will have to "pull" the signal in the right direction to
+make sure it stays there.  If it's high you need a "pullup" resistor
+(to pull it high), if low a "pulldown".  We give you routines to do so
+(`gpio_set_pulldown(pin)` or `gpio_set_pullup(pin)`).  You call these
+after configuring for input or output.
 
-1. Write the code to configure the GPIO pins as needed.  
-
-2. Test with a magnet.
+Now, we write the code.
+   1. Write the code to configure the GPIO pins.
+   2. If you didn't already, implement your `gpio_read` function to read the value
+      from a pin.  This will mirror your other `gpio` functions.
+   3. Test with a magnet.
 
 Troubleshooting:
   1. Check wiring.   Check if sensor is reversed.
