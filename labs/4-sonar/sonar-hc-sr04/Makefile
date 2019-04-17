@@ -11,6 +11,10 @@ endif
 START = $(CS49N_LIBPI_PATH)/cs49n-start.o
 MEMMAP = $(CS49N_LIBPI_PATH)/memmap
 
+LPI_FAKE_PATH = $(CS49N_LIBPI_PATH)/../libpi-fake
+LPI_FAKE = $(CS49N_LIBPI_PATH)/../libpi-fake/libpi-fake.a
+FAKE_CFLAGS = -Wno-unused-function -Wno-unused-variable -O -Wall -Werror
+
 # useful set of defines.
 include $(CS49N_LIBPI_PATH)/includes.mk
 
@@ -22,6 +26,11 @@ all: libpi $(NAME).bin
 # is there a better way to do this?
 libpi:
 	@make -C $(CS49N_LIBPI_PATH)
+
+
+fake: $(NAME).c $(LPI_FAKE)
+	@make -C $(LPI_FAKE_PATH)
+	gcc -I$(CS49N_LIBPI_PATH) $(FAKE_CFLAGS) $(NAME).c -o fake-$(NAME) $(LPI_FAKE)
 
 $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 	$(LD) $(START) $(OBJS) -T $(MEMMAP) -o $(NAME).elf  $(LPI)
@@ -57,15 +66,12 @@ $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 .S.o: Makefile
 	$(CC) -c $(CPP_ASFLAGS) $< -o $@
 
-run:
-	my-install $(NAME).bin
-
 tags:
 	@rm -f tags
 	ctags *.[chsS] $(CS49N_LIBPI_PATH)/*.[chsS]
 
 # remove compilation products
 clean:
-	rm -f replay *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
+	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
 
 .PHONY: run libpi tags clean
