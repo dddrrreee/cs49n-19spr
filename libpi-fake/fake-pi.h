@@ -6,7 +6,7 @@
 
 #include "demand.h"
 
-#define trace(msg, args...) (printf)("FAKEPI:%s:" msg, __FUNCTION__, ##args)
+#define trace(msg, args...) (fprintf)(stderr, "FAKEPI:%s:" msg, __FUNCTION__, ##args)
 
 void notmain(void);
 
