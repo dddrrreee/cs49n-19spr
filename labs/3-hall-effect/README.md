@@ -3,7 +3,6 @@
 For this lab you're going to implement the sensor driver on your own
 for a simple a simple magnetic sensing device (a "hall effect" sensor).
 
-
 <table><tr><td>
   <img src="images/hall.jpg"/>
 </td></tr></table>
@@ -20,7 +19,8 @@ we know its possible to get the needed information!).
    2. They are really cheap, so hook up 3-4 of them, and use them to control some
       number of LEDs.
 
-### Implementing code for the hall effect Allegro A1104 sensor
+----------------------------------------------------------------------
+#### Implementing code for the hall effect Allegro A1104 sensor
 
 First, find the data sheet.   Google search for 'allegro A1104 datasheet'
 or some variation of that.  You're looking for the manufacturer's doc
