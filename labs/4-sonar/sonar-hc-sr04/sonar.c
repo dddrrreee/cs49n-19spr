@@ -1,9 +1,11 @@
 /*
  * sonar, hc-sr04
- *
- * 
  */
 #include "rpi.h"
+
+
+// use this timeout so everyone is consistent.
+static unsigned timeout = 30000;
 
 // gpio_read(pin) until either:
 //  1. gpio_read(pin) != v ==> return 1.
@@ -36,7 +38,6 @@ typedef struct {
 // The comments on the sparkfun product page might be helpful.
 hc_sr04_t hc_sr04_init(int trigger, int echo) {
     hc_sr04_t h = { .trigger = trigger, .echo = echo };
-
     unimplemented();
     return h;
 }
@@ -59,8 +60,9 @@ hc_sr04_t hc_sr04_init(int trigger, int echo) {
 //	high (or low) readings before you decide to trust the 
 // 	signal.
 //
-unsigned hc_sr04_get_distance(hc_sr04_t *h) {
+int hc_sr04_get_distance(hc_sr04_t *h) {
     unimplemented();
+    return -1;
 }
 
 void notmain(void) {
@@ -70,12 +72,14 @@ void notmain(void) {
     hc_sr04_t h = hc_sr04_init(20, 21);
 	printk("sonar ready!\n");
 
-    for(int i = 0; i < 20; i++) {
-        printk("distance = %d inches\n", hc_sr04_get_distance(&h));
+    for(int dist, i = 0; i < 10; i++) {
+        // read until no timeout.
+        while((dist = hc_sr04_get_distance(&h)) < 0)
+            ;
+        printk("distance = %d inches\n", dist);
         // wait a second
         delay_ms(1000);
     }
-
 	printk("stopping sonar !\n");
     clean_reboot();
 }
