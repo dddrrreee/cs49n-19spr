@@ -21,7 +21,9 @@ void delay_us(unsigned us) {
         }
     }
 }
-
 void delay_ms(unsigned ms) {
     delay_us(ms*1000);
+}
+void delay_sec(unsigned sec) {
+    delay_ms(sec*1000);
 }
