@@ -59,9 +59,15 @@ tags:
 	@rm -f tags
 	ctags *.[chsS] $(CS49N_LIBPI_PATH)/*.[chsS]
 
+test: fake
+	./fake-$(NAME) 1 2> /tmp/$(NAME)-1.out
+	cksum /tmp/$(NAME)-1.out
+	./fake-$(NAME) 10 2> /tmp/$(NAME)-10.out
+	cksum /tmp/$(NAME)-10.out
+
 # remove compilation products
 clean:
 	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
 	make -C $(LPI_FAKE_PATH) clean
 
-.PHONY: run libpi tags clean
+.PHONY: run libpi tags clean test
