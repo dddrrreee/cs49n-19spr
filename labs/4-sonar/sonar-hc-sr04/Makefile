@@ -13,7 +13,6 @@ MEMMAP = $(CS49N_LIBPI_PATH)/memmap
 
 LPI_FAKE_PATH = $(CS49N_LIBPI_PATH)/../libpi-fake
 LPI_FAKE = $(CS49N_LIBPI_PATH)/../libpi-fake/libpi-fake.a
-FAKE_CFLAGS = -Wno-unused-function -Wno-unused-variable -O -Wall -Werror
 
 # useful set of defines.
 include $(CS49N_LIBPI_PATH)/includes.mk
@@ -27,10 +26,11 @@ all: libpi $(NAME).bin
 libpi:
 	@make -C $(CS49N_LIBPI_PATH)
 
+.PHONY: fake libpi
 
-fake: $(NAME).c $(LPI_FAKE)
+fake: 
 	@make -C $(LPI_FAKE_PATH)
-	gcc -I$(CS49N_LIBPI_PATH) $(FAKE_CFLAGS) $(NAME).c -o fake-$(NAME) $(LPI_FAKE)
+	gcc -I$(CS49N_LIBPI_PATH) -O -Wall -Werror $(NAME).c -o fake-$(NAME) $(LPI_FAKE)
 
 $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 	$(LD) $(START) $(OBJS) -T $(MEMMAP) -o $(NAME).elf  $(LPI)
@@ -42,23 +42,12 @@ $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 
 # should re-do this to use the libpi makefile.
 
-# http://scottmcpeak.com/autodepend/autodepend.html
-# compile and generate dependency info;
-# more complicated dependency computation, so all prereqs listed
-# will also become command-less, prereq-less targets
-#   sed:    strip the target (everything before colon)
-#   sed:    remove any continuation backslashes
-#   fmt -1: list words one per line
-#   sed:    strip leading spaces
-#   sed:    add trailing colons
-%.o: %.c  Makefile
-	$(CC) -c $(CFLAGS) $*.c -o $*.o
-	$(CC) -MM $(CFLAGS) $*.c > $*.d
-	@mv -f $*.d $*.d.tmp
-	@sed -e 's|.*:|$*.o:|' < $*.d.tmp > $*.d
-	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | \
-	  sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
-	@rm -f $*.d.tmp
+%.d: %.c Makefile
+	$(CC) $(CFLAGS) -c -MT $@ -MMD -MP -MF $@ $< -o $*.o
+
+%.o : %.c
+%.o : %.c %.d
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 .s.o: Makefile
 	$(AS) $(ASFLAGS) $< -o $@
@@ -70,8 +59,15 @@ tags:
 	@rm -f tags
 	ctags *.[chsS] $(CS49N_LIBPI_PATH)/*.[chsS]
 
+test: fake
+	./fake-$(NAME) 1 2> /tmp/$(NAME)-1.out
+	cksum /tmp/$(NAME)-1.out
+	./fake-$(NAME) 10 2> /tmp/$(NAME)-10.out
+	cksum /tmp/$(NAME)-10.out
+
 # remove compilation products
 clean:
 	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
+	make -C $(LPI_FAKE_PATH) clean
 
-.PHONY: run libpi tags clean
+.PHONY: run libpi tags clean test
