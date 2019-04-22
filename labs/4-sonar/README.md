@@ -23,6 +23,15 @@ needed information!).
 For lab:
    1. Use a ruler (we'll have one) to check that your sonar measures distance accurately.
    2. Show that you can handle when your sonar does not hear an echo back.
+   3. Compute checksums.
+
+If you run `make test` the `Makefile` will compute the checksums for you:
+    ./fake-sonar 1 2> /tmp/sonar-1.out
+    cksum /tmp/sonar-1.out
+    1950925016 7211 /tmp/sonar-1.out
+    ./fake-sonar 10 2> /tmp/sonar-10.out
+    cksum /tmp/sonar-10.out
+    2186614110 142109 /tmp/sonar-10.out
 
 Extension: 
    - Vary an LED smoothly using PWM based on the distance (e.g.,
