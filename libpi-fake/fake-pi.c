@@ -6,7 +6,7 @@
 #include <stdarg.h>
 
 // not very good random.
-unsigned short bad_random(void) {
+unsigned short fake_random(void) {
     static unsigned short lfsr = 0xACE1u;
     static unsigned bit;
     bit  = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5) ) & 1;
@@ -61,9 +61,9 @@ unsigned timer_get_usec(void) {
     static unsigned t;
 
     if(time_delta)
-        t += (random() % time_delta);
+        t += (fake_random() % time_delta);
     else
-        t = random();
+        t = fake_random();
     trace("returning time=%dusec\n", t);
     return t;
 }

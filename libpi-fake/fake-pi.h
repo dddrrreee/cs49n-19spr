@@ -13,9 +13,9 @@ void notmain(void);
 void fake_gpio_set_bias(int n);
 void fake_timer_max_delta(unsigned delta);
 
-#define random bad_random
+#define random xxx
 
 // not very good random.
-unsigned short bad_random(void);
+unsigned short fake_random(void);
 
 #endif

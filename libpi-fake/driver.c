@@ -31,7 +31,7 @@ void fancy_check(int N) {
         // child
         if(!pid) {
             while(i-->0)
-                random();
+                fake_random();
             // srandom(i);
             notmain();
             fflush(stdout);
