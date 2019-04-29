@@ -1,45 +1,76 @@
-### Simple networking.
+---
+layout: page
+title: IR sensing.
+show_on_index: true
+---
 
-For this lab you're going to use a TSOP38238 infrared (IR) receiver and
-a IR led to communicate with your partner's pi.    You'll first transmit
-and then receive on your pi to make sure you have the hardware and your
-code works, then you'll communicate with your partner.
+### Overview
+	
+
+
+
+
+Today we're going to (try to!) use an IR sensor to reverse engineer the
+key presses from a remote so that you can control your pi using one.
 
 As before, you should copy code from a recent lab into this directory, update
-the `Makefile` and find the necessary datasheet online.  
+the `Makefile` and find the necessary datasheet online.
+The TSOP has a pretty similar interface to a hall effect sensor.
 
-### Check-off
+First steps:
+   1. Write the code to read from the input pin.  
 
-For lab:
-   - Show that you can blink a light on your partner's pi using a touch sensor.
+   2. Remotes communicate by sending values for a speicific amount of
+   time.  So to start off record the value sent and the time it was sent.
 
-### Local blink.
+   3. COMMON MISTAKE: don't print *while* timing, since that messes up
+	the timing.  Instead when the IR has been low for "a long time",
+	emit all the timings you've seen.
 
-First, get the TSOP datasheet online.  Figure out:
-  1. How to wire the device.
-  2. What power it needs.
-  3. Wire it up, and wire up the IR LED.
+   4. A key press transition is typically signaled with a 
+	"very long" on-value.
+       Then a set of timed off/on pulses.    You should be able to 
+	see this pattern in the values you print and it should be 
+	"somewhat" stable.
 
-Second, implement two functions:
- 1. `tsop_init(input)`: called with the GPIO pin to use for input.
-     It sets these up and initializes the device.
+### How they send values
 
- 2. `tsop_read(input)`: returns if the device is receiving a signal or not.
-    You may have to read multiple times to ensure a stable value.
-    (Note: make sure you figure out what the default value is!)
+On the remotes I used for class (but not this year: we have different
+remotes) it looks like they send a 0 or 1 bit by always sending 1 but
+for differing amounts of time.   They seperate the bits by sending 0
+for a set amount of time.  (You might read up on Manchester encoding.)
 
-Third, do a blink on your own pi:
- 1. Turn the IR LED on/off and read from your TSOP.
- 2. Hook up a normal LED and turn it on when you read a signal from the TSOP.
+For these remotes:
 
-Trouble-shooting:
- - IR is very directional and easily blocked.  If you don't get signal it can
-   be (1) because the LED is blocked or (2) the TSOP is not pointing at the LED.
+    - skip: send 0 for about 600usec.
+    - 0: send 1 for about 600usec.
+    - 1: send 1 for about 1600 usec.
 
-### Remote blink
+So to send 01 they would:
 
-Get a partner:
-  1. Flip a coin: loser has to send a signal, winner received and blinks the visible
-     LED.
-  2. Switch, to make sure it works.
-  3. Now hook up the touch sensor and send a signal when contact is made.
+    1. Send a skip (0 for 600 usec).
+    2. Send a 0 (1 for 600 usec);
+    3. Send a skip (0 for 600 usec);
+    4. Send a 1 (1 for 1600usec).
+    5. (maybe) send a skip (0 for 600usec).
+
+It also looks like they indicate the start of a transmission by sending
+1 for about 40,000 usec and then an initial value.
+
+So given this information you should be able to reverse engineer the
+value for each key.
+   1. pick up the header.
+   2. read the values.
+   3. convert the values to 0 and 1, shifting them into an unsigned
+  
+The main issue is handling error.  We'll just do something simple:
+   1. When deciding if a value is a skip, return true if it's within
+   a given number of usec (e.g., if its between 400 to 800usec).
+
+   2. When deciding if transmission was a 1 or a 0, pick the value by 
+   deciding if its above or below the halfway point between the two 
+   values (e.g., if the timing is above (1600+600)/2 then its a 1 and
+   is a 0 otherwise).
+
+   3. If you are more clever than this somewhat brain-dead approach,
+   be more clever!
