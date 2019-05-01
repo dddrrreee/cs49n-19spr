@@ -6,6 +6,7 @@ OUR_OBJS = \
         cs49n-src/reboot.o  \
         cs49n-src/put-get.o  \
         cs49n-src/timer.o \
+        cs49n-src/cache.o \
         cs49n-src/clean-reboot.o  \
         cs49n-src/mem-barrier.o  \
         cs49n-libc/branchto.o  \
