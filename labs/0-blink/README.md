@@ -158,7 +158,13 @@ Mac:
 
 Linux:
   - You shouldn't need drivers, however you may need to add yourself to
-  the `dialout` group (or `serial`) depending on the distribution.
+    the `dialout` group (or `serial`) depending on the distribution.
+
+        sudo adduser <your username> dialout
+
+    If that still doesn't work, you may have to remove `modemmanager`:
+
+        sudo apt-get remove modemmanager
 
 Mechanically:
 
@@ -194,6 +200,10 @@ Install the toolchain:
            sudo apt-get install gcc-arm-none-eabi
        
       You may also have to add yourself to the `dialout` group.
+      If gcc can't find header files, try:
+
+           sudo apt-get install libnewlib-arm-none-eabi
+
 
 Compile `part2/blink-pin20.s` using the shell script.
 
