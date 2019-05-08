@@ -108,6 +108,7 @@ void dsb(void);
 
 // use this if you need a device memory barrier.
 void dev_barrier(void);
+#define mb dev_barrier
 
 // cache enable
 void enable_cache(void) ;
