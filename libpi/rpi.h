@@ -14,6 +14,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <string.h>
 #if 0
 /*
  * Not sure if we should include these so you don't have to mess up 
