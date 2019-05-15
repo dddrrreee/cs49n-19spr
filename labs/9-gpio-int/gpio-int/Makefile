@@ -1,5 +1,5 @@
 # change this name to whatever your program is called
-NAME=timer
+NAME=gpio-int
 # add any additional .o's here
 OBJS = $(NAME).o interrupts-asm.o interrupts-c.o cstart.o  timer-interrupt.o
 
@@ -19,7 +19,7 @@ LPI_FAKE = $(CS49N_LIBPI_PATH)/../libpi-fake/libpi-fake.a
 include $(CS49N_LIBPI_PATH)/includes.mk
 
 CFLAGS += -Wstack-usage=512 -Wno-unused-function -Wno-unused-variable
-CFLAGS += -Werror -O10
+CFLAGS += -Werror
 
 all: libpi $(NAME).bin  run
 
@@ -27,7 +27,7 @@ all: libpi $(NAME).bin  run
 libpi:
 	@make -C $(CS49N_LIBPI_PATH)
 
-.PHONY: fake libpi clean
+.PHONY: fake libpi
 
 run: 
 	pi-install $(NAME).bin
@@ -46,17 +46,13 @@ $(NAME).bin: $(START) $(MEMMAP) $(OBJS)
 	$(OCP) $(NAME).elf -O binary $(NAME).bin
 	# ctags $(NAME).c
 
-
-# remove compilation products
-clean:
-	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
-	make -C $(LPI_FAKE_PATH) clean
-
-
-.PHONY: run libpi tags clean test
-
 # pull in dependency info for *existing* .o files
+# *unbelievable*: make clean doesn't skip this include even though the 
+# target is after.
+#   https://www.gnu.org/software/make/manual/html_node/Goals.html
+ifneq ($(MAKECMDGOALS),clean)
 -include $(OBJS:.o=.d)
+endif
 
 # should re-do this to use the libpi makefile.
 
@@ -83,4 +79,9 @@ test: fake
 	./fake-$(NAME) 10 2> /tmp/$(NAME)-10.out
 	cksum /tmp/$(NAME)-10.out
 
+# remove compilation products
+clean:
+	rm -f fake-$(NAME) *.o *.d *.bin *.elf *.list *.img Makefile.bak *~ tags
+	make -C $(LPI_FAKE_PATH) clean
 
+.PHONY: run libpi tags clean test

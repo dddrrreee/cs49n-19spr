@@ -49,7 +49,7 @@ void notmain() {
 
     printk("setting up timer interrupts\n");
     // Q: if you change 0x100?
-    timer_interrupt_init(0x10);
+    timer_interrupt_init(0x100);
 
     printk("gonna enable ints globally!\n");
     
