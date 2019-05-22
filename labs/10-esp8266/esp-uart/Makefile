@@ -13,7 +13,7 @@ all:  $(NAME) run
 # $(NAME) run client
 
 run:
-	./$(NAME) /dev/ttyUSB0
+	./$(NAME) 
 
 $(NAME):  $(OBJS)  $(NAME).o
 	$(CC) $(CFLAGS) $(OBJS) $(NAME).o -o $(NAME) -lm
