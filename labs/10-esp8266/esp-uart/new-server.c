@@ -47,6 +47,7 @@ void esp_setup_wifi(void) {
     at_cmd("AT");
     at_cmd("AT+GMR");
     at_cmd("AT+RST");
+    at_drain();
 
 //    at_cmd("ATE0");
     // add your own network name here.
