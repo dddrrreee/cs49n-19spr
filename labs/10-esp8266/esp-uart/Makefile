@@ -2,7 +2,7 @@ CFLAGS = -Wall -Og  -I../pi-cat -Werror  -Wno-unused-function
 CC = gcc
 SRC = esp-uart.c ../pi-cat/tty.c 
 OBJS = $(SRC:.c=.o)
-NAME = server
+NAME = new-server
 
 # ok.  this is filtering out.
 # OBJS := $(filter-out test.o, $(OBJS))

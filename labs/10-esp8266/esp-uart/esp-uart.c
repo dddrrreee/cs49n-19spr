@@ -27,6 +27,7 @@
 
 int at_fd;
 
+// reads one character -- if we get it, then just reads the rest.
 int esp_async_gets(int fd, char *buf, unsigned nbytes) {
     fd_set rfds;
     FD_ZERO(&rfds);
@@ -35,7 +36,7 @@ int esp_async_gets(int fd, char *buf, unsigned nbytes) {
     // setting tv_sec = tv_usec=0 makes select() non-blocking.
     struct timeval tv;
     tv.tv_sec = 0;
-    tv.tv_usec = 0;
+    tv.tv_usec = 10000;
 
     int r;
     if((r = select(at_fd+1, &rfds, NULL, NULL, &tv)) < 0)
@@ -43,12 +44,44 @@ int esp_async_gets(int fd, char *buf, unsigned nbytes) {
     if(!FD_ISSET(at_fd, &rfds)) 
         return 0;
 
+    int n = 0;
+    while(1) {
+        char c;
+        if((r = read(at_fd, &c, 1)) != 1) 
+            sys_die(read, wrong result);
+        if(c == '\n') {
+            if(buf[n-1] == '\r') {
+                buf[n-1] = 0;
+                return n - 1;
+            }
+            buf[n] = 0;
+            return n;
+        }
+#if 0
+        if(c == '\r') {
+            assert(n>0);
+            fprintf(stderr, "buf=<%s>\n", buf);
+            fprintf(stderr, "got char='%c',%d\n", buf[n-1], (int)buf[n-1]);
+            assert(buf[n-1] == '\n');
+            buf[n-1] = 0;
+            return n-1;
+        }
+#endif
+        buf[n++] = c;
+    }
+
+#if 0
     int n;
     if((n = read(at_fd, buf, nbytes)) <= 0)
         sys_die(read, failed);
     assert(n>0);
+    
+    if(buf[n-1] != '\n')
+        fprintf(stderr, "n=%d, got='%c' %d\n", n,buf[n-1], buf[n-1]);
+    assert(buf[n-1] == '\n');
     buf[n-1] = 0;
     return n;
+#endif
 }
 
 // buf has to be big enough.
