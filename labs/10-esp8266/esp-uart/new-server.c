@@ -50,7 +50,7 @@ void esp_setup_wifi(void) {
 
 //    at_cmd("ATE0");
     // add your own network name here.
-    at_cmd("AT+CWSAP=\"cs49n_dre\",\"1234test\",5,3");
+    at_cmd("AT+CWSAP=\"YOURWIFI\",\"1234test\",5,3");
     at_cmd("AT+CWMODE=3");
 
     // on my esp this prints out: +CIFSR:APIP,"192.168.4.1"
