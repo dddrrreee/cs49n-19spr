@@ -66,8 +66,8 @@ The WS2812B's use a crude variant of this.
 
 The WS2812B protocol to send a bit of information:
   1. To send a `1` bit: write a `1` for `T1H` nanoseconds (defined in datasheet), then a `0`
-     for T0H nanoseconds.
-  2. To send a `0` bit: write a `1` for `T1L` nanoseconds, then a `0` for `T0L` nanoseconds.
+     for T1L nanoseconds.
+  2. To send a `0` bit: write a `1` for `T0H` nanoseconds, then a `0` for `T0L` nanoseconds.
   3. To send a byte: send the 7th bit (as above), the 6th, the 5th...
   4. The timings are fairly tight.  The datasheet states +/- 150 nanoseconds.  Thus
      you will have to write your code very carefully.  You will also have to be 
