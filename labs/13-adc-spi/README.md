@@ -12,9 +12,6 @@ converter (ADC).  It's cheap and has 8 inputs.  Pretty common.
   <img src="docs/MCP3008-ADC-IC.jpg"/>
 </td></tr></table>
 
-<table><tr><td>
-  <img src="docs/MCP3008-ADC-Pinout.jpg"/>
-</td></tr></table>
 
 
 So far this quarter we've interacted with digital devices that give a 0 or
@@ -27,6 +24,9 @@ The downside of the R/PI is that it has no way to read these directly.
 Instead we have to use an [ADC](https://en.wikipedia.org/wiki/Analog-to-digital_converter)
 to convert the voltage to a number.
 
+
+### Part 0: Hooking up the hardware.
+
 The MCP3008 code uses the SPI protocol to communicate by sending a
 3-byte message requesting a reading and receives a 3-byte message back.
 (See [here](http://www.hertaville.com/interfacing-an-spi-adc-mcp3008-chip-to-the-raspberry-pi-using-c.html) for a clear writeup.)
@@ -36,12 +36,25 @@ a bunch of wires.
 (I'll do a bonus lab
 tomorrow on how to use I2C which has fewer wires, but often I2C devices
 cost more.)   
-Look at the photo carefully!  
 
-The following schematic is from the linked writeup above:
+Look at the schematic carefully!  
+
 <table><tr><td>
-  <img src="docs/mcp-to-pi.png"/>
+  <img src="docs/MCP3008-ADC-Pinout.png"/>
 </td></tr></table>
+
+To connect to the pi:
+  1. connect `Vdd` and `Vref` to 3.3v.
+  2. connect `A. Ground` and `D. Ground` to ground on the pi.
+  3. CS should connect to `CSE1` on the pi.
+  4. The pi is the master and the ADC is the slave, so the mcp3008's `Dout` should
+  connect to `MISO` (master-in-slave-out) and `Din` should connect to `MOSI`
+ (master-out-slave-in).
+
+You can run `reference.bin` in the code directory and connect an LED from
+power to channel 0 on the adc --- you should get a reading around 300-500.
+
+### Part 1: writing the code.
 
 In terms of code, you'll have to implement use the mcp3008 datasheet (in
 `docs/MCP3008.pdf`) to implement two things:
