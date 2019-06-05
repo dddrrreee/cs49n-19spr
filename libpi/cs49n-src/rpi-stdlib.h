@@ -4,7 +4,6 @@
 
 // uint32 etc.
 #include "rpi.h"
-#include "rpi-assert.h"
 
 long trunc(double d);
 
