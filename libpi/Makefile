@@ -5,6 +5,8 @@ OUR_OBJS = \
         cs49n-src/panic.o  \
         cs49n-src/reboot.o  \
         cs49n-src/put-get.o  \
+        cs49n-src/spi.o  \
+        cs49n-src/i2c.o  \
         cs49n-src/timer.o \
         cs49n-src/cache.o \
         cs49n-src/clean-reboot.o  \
