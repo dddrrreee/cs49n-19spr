@@ -6,6 +6,8 @@
 #ifndef __RPI_H__
 #define __RPI_H__
 
+#define RPI_COMPILED
+
 // We are running without an OS, but these will get pulled from gcc's include's,
 // not your laptops.
 // 
@@ -13,7 +15,7 @@
 // have a bunch of code we cannot run, which can lead to problems.
 #include <stddef.h>
 #include <stdint.h>
-
+// XXX: probably should not do this --- alot of random code in <string.h>
 #include <string.h>
 #if 0
 /*
