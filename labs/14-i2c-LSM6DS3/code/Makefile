@@ -1,5 +1,5 @@
 # change this name to whatever your program is called
-NAME=main
+NAME=init
 
 # add any additional .o's here
 OBJS = $(NAME).o 
