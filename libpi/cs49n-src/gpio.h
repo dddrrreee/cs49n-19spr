@@ -60,4 +60,16 @@ void gpio_set_pulldown(unsigned pin);
 // get the GPIO function setting for <pin>.  -1 on error.
 unsigned gpio_get_function(unsigned pin);
 
+int gpio_event_detected(unsigned pin);
+void gpio_event_clear(unsigned pin);
+
+
+int gpio_int_is_set(unsigned gpio_int);
+void gpio_int_set(unsigned addr, unsigned pin);
+void gpio_int_falling_edge(unsigned pin);
+
+// redo this?
+enum { GPIO_INT0 = 49, GPIO_INT1, GPIO_INT2, GPIO_INT3 };
+
+
 #endif

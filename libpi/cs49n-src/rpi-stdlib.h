@@ -2,8 +2,6 @@
 #ifndef __RPI_STDLIB_H__
 #define __RPI_STDLIB_H__
 
-// uint32 etc.
-#include "rpi.h"
 
 long trunc(double d);
 
@@ -85,5 +83,16 @@ long trunc(double d);
                 panic("expected %x got %x for %s\n", exp,x.u,#field);   \
         assert(x.u == exp);                                             \
 } while(0)
+
+
+static inline void or32(volatile void *addr, unsigned val) {
+    // overkill in terms of memory barriers.
+    mb();
+    put32(addr, get32(addr) | val);
+    mb();
+}
+static inline void OR32(unsigned long addr, unsigned val) {
+    or32((volatile void*)addr, val);
+}
 
 #endif
